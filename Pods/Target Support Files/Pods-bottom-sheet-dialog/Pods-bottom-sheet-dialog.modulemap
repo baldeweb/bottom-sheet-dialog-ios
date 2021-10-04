@@ -1,0 +1,6 @@
+framework module Pods_bottom_sheet_dialog {
+  umbrella header "Pods-bottom-sheet-dialog-umbrella.h"
+
+  export *
+  module * { export * }
+}
