@@ -11,9 +11,17 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func openDialogPressed(_ sender: Any) {
+        print("LOG >> CLICOU")
+        
+        let vc = BottomSheetDialog()
+        vc.modalPresentationStyle = .overCurrentContext
+        // keep false
+        // modal animation will be handled in VC itself
+        self.present(vc, animated: false)
+    }
+    
 }
 
