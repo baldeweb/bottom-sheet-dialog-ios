@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-//--------------------------------------------------
-// MARK: - UIView
-//--------------------------------------------------
-
 extension UIView {
     func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
         let roundedLayer = CAShapeLayer()

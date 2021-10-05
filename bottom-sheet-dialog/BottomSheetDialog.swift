@@ -6,30 +6,24 @@
 //
 
 import UIKit
+import SnapKit
 
 class BottomSheetDialog: UIViewController {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Get Started"
-        label.font = .boldSystemFont(ofSize: 20)
-        return label
-    }()
-    
-    lazy var notesLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sem fringilla ut morbi tincidunt augue interdum. \n\nUt morbi tincidunt augue interdum velit euismod in pellentesque massa. Pulvinar etiam non quam lacus suspendisse faucibus interdum posuere. Mi in nulla posuere sollicitudin aliquam ultrices sagittis orci a. Eget nullam non nisi est sit amet. Odio pellentesque diam volutpat commodo. Id eu nisl nunc mi ipsum faucibus vitae.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sem fringilla ut morbi tincidunt augue interdum. Ut morbi tincidunt augue interdum velit euismod in pellentesque massa."
-        label.font = .systemFont(ofSize: 16)
-        label.textColor = .darkGray
-        label.numberOfLines = 0
+        label.text = "Selecione uma opção"
+        label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 14)
+        label.textAlignment = .center
         return label
     }()
     
     lazy var contentStackView: UIStackView = {
-        let spacer = UIView()
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, notesLabel, spacer])
+        let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
-        stackView.spacing = 12.0
+        stackView.spacing = 8.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -38,6 +32,7 @@ class BottomSheetDialog: UIViewController {
         view.backgroundColor = .white
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -46,12 +41,14 @@ class BottomSheetDialog: UIViewController {
         let view = UIView()
         view.backgroundColor = .black
         view.alpha = maxDimmedAlpha
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let defaultHeight: CGFloat = 300
-    let dismissibleHeight: CGFloat = 300
-    
+    lazy var buttonOne = UIButton(frame: .zero)
+    lazy var buttonTwo = UIButton(frame: .zero)
+    lazy var spacer = UIView(frame: .zero)
+    let defaultHeight: CGFloat = 250
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
     
@@ -59,10 +56,12 @@ class BottomSheetDialog: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        
+        initTapGesture()
+    }
+    
+    private func initTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleCloseAction))
         dimmedView.addGestureRecognizer(tapGesture)
-        
         setupPanGesture()
     }
     
@@ -78,38 +77,68 @@ class BottomSheetDialog: UIViewController {
     
     func setupView() {
         view.backgroundColor = .clear
+        
+        buttonOne = Button(frame: .zero).DefaultButton(self,
+                                                       title: "Button One",
+                                                       selector: #selector(buttonOneAction))
+        
+        buttonTwo = Button(frame: .zero).DefaultButton(self,
+                                                       title: "Button Two",
+                                                       selector: #selector(buttonTwoAction))
+    }
+    
+    @objc func buttonOneAction(sender: UIButton!) {
+        print("LOG >> BUTTON ONE")
+    }
+    
+    @objc func buttonTwoAction(sender: UIButton!) {
+        print("LOG >> BUTTON TWO")
     }
     
     func setupConstraints() {
         view.addSubview(dimmedView)
         view.addSubview(containerView)
-        dimmedView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentStackView.addArrangedSubview(titleLabel)
+        contentStackView.addArrangedSubview(buttonOne)
+        contentStackView.addArrangedSubview(buttonTwo)
+        contentStackView.addArrangedSubview(spacer)
         
         containerView.addSubview(contentStackView)
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            dimmedView.topAnchor.constraint(equalTo: view.topAnchor),
-            dimmedView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            dimmedView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            dimmedView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            contentStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 32),
-            contentStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
-            contentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            contentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-        ])
+        buttonOne.snp.makeConstraints { make in
+            make.topMargin.equalTo(titleLabel).inset(15)
+            make.height.equalTo(50)
+        }
         
-        containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: defaultHeight)
+        buttonTwo.snp.makeConstraints { make in
+            make.height.equalTo(50)
+        }
         
-        containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: defaultHeight)
+        dimmedView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
         
-        containerViewHeightConstraint?.isActive = true
-        containerViewBottomConstraint?.isActive = true
+        containerView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            self.containerViewHeightConstraint = make.height.equalTo(defaultHeight).constraint.layoutConstraints.first
+            self.containerViewBottomConstraint = make.bottom.equalTo(defaultHeight).constraint.layoutConstraints.first
+        }
+        
+        contentStackView.snp.makeConstraints { make in
+            make.top.equalTo(containerView).offset(32)
+            make.bottom.equalTo(containerView).inset(20)
+            make.leading.equalTo(containerView).offset(20)
+            make.trailing.equalTo(containerView).inset(20)
+        }
+        
+        spacer.snp.makeConstraints { make in
+            make.height.equalTo(25)
+        }
     }
     
     func setupPanGesture() {

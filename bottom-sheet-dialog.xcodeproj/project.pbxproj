@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2A178B035A796E60C5E5170A /* Pods_bottom_sheet_dialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C33B9CAB24CBF86C740408D /* Pods_bottom_sheet_dialog.framework */; };
+		BA6C8E4D270BE09B0051471C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C8E4C270BE09B0051471C /* Button.swift */; };
+		BA6C8E50270BE0D80051471C /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C8E4F270BE0D80051471C /* UIUtils.swift */; };
 		BAF95828270BB7A3008602A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF95827270BB7A3008602A0 /* AppDelegate.swift */; };
 		BAF9582A270BB7A3008602A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF95829270BB7A3008602A0 /* SceneDelegate.swift */; };
 		BAF9582C270BB7A3008602A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF9582B270BB7A3008602A0 /* ViewController.swift */; };
@@ -22,6 +24,8 @@
 		159F0265217BFB9B8C000B7B /* Pods-bottom-sheet-dialog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bottom-sheet-dialog.debug.xcconfig"; path = "Target Support Files/Pods-bottom-sheet-dialog/Pods-bottom-sheet-dialog.debug.xcconfig"; sourceTree = "<group>"; };
 		6427B2D3D3C609B0E502B9E9 /* Pods-bottom-sheet-dialog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bottom-sheet-dialog.release.xcconfig"; path = "Target Support Files/Pods-bottom-sheet-dialog/Pods-bottom-sheet-dialog.release.xcconfig"; sourceTree = "<group>"; };
 		8C33B9CAB24CBF86C740408D /* Pods_bottom_sheet_dialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bottom_sheet_dialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6C8E4C270BE09B0051471C /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		BA6C8E4F270BE0D80051471C /* UIUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
 		BAF95824270BB7A3008602A0 /* bottom-sheet-dialog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bottom-sheet-dialog.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAF95827270BB7A3008602A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAF95829270BB7A3008602A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,7 +56,6 @@
 				159F0265217BFB9B8C000B7B /* Pods-bottom-sheet-dialog.debug.xcconfig */,
 				6427B2D3D3C609B0E502B9E9 /* Pods-bottom-sheet-dialog.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -62,6 +65,22 @@
 				8C33B9CAB24CBF86C740408D /* Pods_bottom_sheet_dialog.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA6C8E4B270BE0850051471C /* components */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C8E4C270BE09B0051471C /* Button.swift */,
+			);
+			name = components;
+			sourceTree = "<group>";
+		};
+		BA6C8E4E270BE0CE0051471C /* util */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C8E4F270BE0D80051471C /* UIUtils.swift */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 		BAF9581B270BB7A3008602A0 = {
@@ -85,6 +104,8 @@
 		BAF95826270BB7A3008602A0 /* bottom-sheet-dialog */ = {
 			isa = PBXGroup;
 			children = (
+				BA6C8E4E270BE0CE0051471C /* util */,
+				BA6C8E4B270BE0850051471C /* components */,
 				BAF95827270BB7A3008602A0 /* AppDelegate.swift */,
 				BAF95829270BB7A3008602A0 /* SceneDelegate.swift */,
 				BAF9582B270BB7A3008602A0 /* ViewController.swift */,
@@ -214,7 +235,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAF95840270BBA0D008602A0 /* Extensions.swift in Sources */,
+				BA6C8E4D270BE09B0051471C /* Button.swift in Sources */,
 				BAF9582C270BB7A3008602A0 /* ViewController.swift in Sources */,
+				BA6C8E50270BE0D80051471C /* UIUtils.swift in Sources */,
 				BAF95844270BC2F2008602A0 /* BottomSheetDialog.swift in Sources */,
 				BAF95828270BB7A3008602A0 /* AppDelegate.swift in Sources */,
 				BAF9582A270BB7A3008602A0 /* SceneDelegate.swift in Sources */,
