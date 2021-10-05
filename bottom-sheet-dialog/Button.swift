@@ -29,8 +29,10 @@ class Button: UIButton {
     func DefaultButton(_ context: UIViewController, title: String?, selector: Selector?) -> UIButton {
         if title != nil { button?.setTitle(title, for: .normal) }
         button?.setTitleColor(.white, for: .normal)
-        button?.backgroundColor =  hexStringToUIColor(hex: "#311B92")
+        button?.backgroundColor =  hexStringToUIColor(hex: "#1565C0")
         if selector != nil { button?.addTarget(context, action: selector!, for: .touchUpInside) }
+        button?.layer.cornerRadius = 25;
+        button?.layer.masksToBounds = true;
         return button!
     }
 }
