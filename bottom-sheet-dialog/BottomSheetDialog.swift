@@ -79,14 +79,16 @@ class BottomSheetDialog: UIViewController {
     private lazy var buttonTwo = UIButton(frame: .zero)
     private let maxDimmedAlpha: CGFloat = 0.6
     private var style: DialogStyleEnum!
+    private var isScrollable: Bool = false
     
     private var containerViewHeightConstraint: NSLayoutConstraint?
     private var containerViewBottomConstraint: NSLayoutConstraint?
     
-    init?(style: DialogStyleEnum, title: String, description: String) {
+    init?(style: DialogStyleEnum, isScrollable: Bool, title: String, description: String) {
         super.init(nibName: nil, bundle: nil)
         self.titleLabel.text = title
         self.descriptionLabel.text = description
+        self.isScrollable = isScrollable
         self.setStyle(style)
     }
     
@@ -106,14 +108,14 @@ class BottomSheetDialog: UIViewController {
         self.style = style
         /*
          switch style {
-            case .SIMPLE:
-                // TODO
-            case .SIMPLE_SINGLE_BUTTON:
-                // TODO
-            case .SIMPLE_DOUBLE_BUTTON:
-                // TODO
-            case .SIMPLE_BUTTON_BY_SIDE:
-                // TODO
+         case .SIMPLE:
+         // TODO
+         case .SIMPLE_SINGLE_BUTTON:
+         // TODO
+         case .SIMPLE_DOUBLE_BUTTON:
+         // TODO
+         case .SIMPLE_BUTTON_BY_SIDE:
+         // TODO
          }
          */
     }
@@ -222,33 +224,33 @@ class BottomSheetDialog: UIViewController {
     }
     
     @objc func handlePanGesture(gesture: UIPanGestureRecognizer) {
-        /* FIXO */
-        /*containerViewHeightConstraint?.constant = defaultHeight
-         view.layoutIfNeeded()*/
-        
-        /* SCROLLAVEL */
-        let translation = gesture.translation(in: view)
-        let isDraggingDown = translation.y > 0
-        let newHeight = currentContainerHeight - translation.y
-        
-        switch gesture.state {
-        case .changed:
-            if newHeight < maximumContainerHeight {
-                containerViewHeightConstraint?.constant = newHeight
-                view.layoutIfNeeded()
+        if isScrollable {
+            let translation = gesture.translation(in: view)
+            let isDraggingDown = translation.y > 0
+            let newHeight = currentContainerHeight - translation.y
+            
+            switch gesture.state {
+            case .changed:
+                if newHeight < maximumContainerHeight {
+                    containerViewHeightConstraint?.constant = newHeight
+                    view.layoutIfNeeded()
+                }
+            case .ended:
+                if newHeight < dismissibleHeight {
+                    self.animateDismissView()
+                } else if newHeight < defaultHeight {
+                    animateContainerHeight(defaultHeight)
+                } else if newHeight < maximumContainerHeight && isDraggingDown {
+                    animateContainerHeight(defaultHeight)
+                } else if newHeight > defaultHeight && !isDraggingDown {
+                    animateContainerHeight(maximumContainerHeight)
+                }
+            default:
+                break
             }
-        case .ended:
-            if newHeight < dismissibleHeight {
-                self.animateDismissView()
-            } else if newHeight < defaultHeight {
-                animateContainerHeight(defaultHeight)
-            } else if newHeight < maximumContainerHeight && isDraggingDown {
-                animateContainerHeight(defaultHeight)
-            } else if newHeight > defaultHeight && !isDraggingDown {
-                animateContainerHeight(maximumContainerHeight)
-            }
-        default:
-            break
+        } else {
+            containerViewHeightConstraint?.constant = defaultHeight
+            view.layoutIfNeeded()
         }
     }
     
