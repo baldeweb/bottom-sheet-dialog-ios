@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBAction func openDialogPressed(_ sender: Any) {
         print("LOG >> CLICOU")
         
-        let vc = BottomSheetDialog()
+        let vc = BottomSheetDialog(style: .BUTTONS_SIDE_BY_SIDE, title: "Titulo", description: "Descricao")!
         vc.modalPresentationStyle = .overCurrentContext
         // keep false
         // modal animation will be handled in VC itself

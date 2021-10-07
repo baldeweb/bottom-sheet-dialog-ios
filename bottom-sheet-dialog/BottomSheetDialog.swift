@@ -1,8 +1,8 @@
 //
-//  BottomSheetDialog.swift
-//  bottom-sheet-dialog
+//  BottomSheetDialogView.swift
+//  bottomsheetdialog-ios
 //
-//  Created by Wallace Baldenebre on 04/10/21.
+//  Created by Wallace on 06/10/21.
 //
 
 import UIKit
@@ -10,34 +10,59 @@ import SnapKit
 
 class BottomSheetDialog: UIViewController {
     
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Selecione uma opção"
+        label.text = ""
         label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 14)
         label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = .boldSystemFont(ofSize: 20)
         return label
     }()
     
-    lazy var contentStackView: UIStackView = {
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.text = ""
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
+        return label
+    }()
+    
+    private lazy var contentStackView: UIStackView = {
+        let spacer = UIView()
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
-        stackView.spacing = 8.0
+        stackView.spacing = 12.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
-    lazy var containerView: UIView = {
+    private lazy var contentHorizontalButtonsStackView: UIStackView = {
+        let spacer = UIView()
+        let stackView = UIStackView(frame: .zero)
+        stackView.axis = .horizontal
+        stackView.spacing = 12.0
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = hexStringToUIColor(hex: "#F5F5F5")
         return view
     }()
     
-    let maxDimmedAlpha: CGFloat = 0.6
-    lazy var dimmedView: UIView = {
+    private lazy var dimmedView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         view.alpha = maxDimmedAlpha
@@ -45,24 +70,52 @@ class BottomSheetDialog: UIViewController {
         return view
     }()
     
-    lazy var buttonOne = UIButton(frame: .zero)
-    lazy var buttonTwo = UIButton(frame: .zero)
-    lazy var spacer = UIView(frame: .zero)
-    let defaultHeight: CGFloat = 250
-    var containerViewHeightConstraint: NSLayoutConstraint?
-    var containerViewBottomConstraint: NSLayoutConstraint?
+    private var defaultHeight: CGFloat = 350
+    private var dismissibleHeight: CGFloat = 250
+    private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 64
+    private var currentContainerHeight: CGFloat = 350
+    
+    private lazy var buttonOne = UIButton(frame: .zero)
+    private lazy var buttonTwo = UIButton(frame: .zero)
+    private let maxDimmedAlpha: CGFloat = 0.6
+    private var style: DialogStyleEnum!
+    
+    private var containerViewHeightConstraint: NSLayoutConstraint?
+    private var containerViewBottomConstraint: NSLayoutConstraint?
+    
+    init?(style: DialogStyleEnum, title: String, description: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.titleLabel.text = title
+        self.descriptionLabel.text = description
+        self.setStyle(style)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        initTapGesture()
+        setupPanGestureHandleClose()
+        setupPanGestureInteraction()
     }
     
-    private func initTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleCloseAction))
-        dimmedView.addGestureRecognizer(tapGesture)
-        setupPanGesture()
+    private func setStyle(_ style: DialogStyleEnum) {
+        self.style = style
+        /*
+         switch style {
+            case .SIMPLE:
+                // TODO
+            case .SIMPLE_SINGLE_BUTTON:
+                // TODO
+            case .SIMPLE_DOUBLE_BUTTON:
+                // TODO
+            case .SIMPLE_BUTTON_BY_SIDE:
+                // TODO
+         }
+         */
     }
     
     @objc func handleCloseAction() {
@@ -76,15 +129,19 @@ class BottomSheetDialog: UIViewController {
     }
     
     func setupView() {
-        view.backgroundColor = .clear
+        self.buttonOne = Button(frame: .zero).Build(
+            context: self,
+            style: .RED,
+            title: "Button One",
+            selector: #selector(buttonOneAction)
+        )
         
-        buttonOne = Button(frame: .zero).DefaultButton(self,
-                                                       title: "Button One",
-                                                       selector: #selector(buttonOneAction))
-        
-        buttonTwo = Button(frame: .zero).DefaultButton(self,
-                                                       title: "Button Two",
-                                                       selector: #selector(buttonTwoAction))
+        self.buttonTwo = Button(frame: .zero).Build(
+            context: self,
+            style: .DEFAULT,
+            title: "Button Two",
+            selector: #selector(buttonTwoAction)
+        )
     }
     
     @objc func buttonOneAction(sender: UIButton!) {
@@ -100,14 +157,21 @@ class BottomSheetDialog: UIViewController {
         view.addSubview(containerView)
         
         contentStackView.addArrangedSubview(titleLabel)
-        contentStackView.addArrangedSubview(buttonOne)
-        contentStackView.addArrangedSubview(buttonTwo)
-        contentStackView.addArrangedSubview(spacer)
+        contentStackView.addArrangedSubview(descriptionLabel)
+        
+        if style == .BUTTONS_SIDE_BY_SIDE {
+            contentHorizontalButtonsStackView.addArrangedSubview(buttonOne)
+            contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
+            contentStackView.addArrangedSubview(contentHorizontalButtonsStackView)
+        } else {
+            contentStackView.addArrangedSubview(buttonOne)
+            contentStackView.addArrangedSubview(buttonTwo)
+        }
         
         containerView.addSubview(contentStackView)
         
         buttonOne.snp.makeConstraints { make in
-            make.topMargin.equalTo(titleLabel).inset(15)
+            make.topMargin.equalToSuperview().inset(15)
             make.height.equalTo(50)
         }
         
@@ -131,17 +195,26 @@ class BottomSheetDialog: UIViewController {
         
         contentStackView.snp.makeConstraints { make in
             make.top.equalTo(containerView).offset(32)
-            make.bottom.equalTo(containerView).inset(20)
+            //make.bottom.equalTo(containerView).inset(20)
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
         }
         
-        spacer.snp.makeConstraints { make in
-            make.height.equalTo(25)
+        titleLabel.snp.makeConstraints { make in
+            make.height.equalTo(40)
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.height.equalTo(90)
         }
     }
     
-    func setupPanGesture() {
+    func setupPanGestureHandleClose() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleCloseAction))
+        dimmedView.addGestureRecognizer(tapGesture)
+    }
+    
+    func setupPanGestureInteraction() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(gesture:)))
         panGesture.delaysTouchesBegan = false
         panGesture.delaysTouchesEnded = false
@@ -149,8 +222,42 @@ class BottomSheetDialog: UIViewController {
     }
     
     @objc func handlePanGesture(gesture: UIPanGestureRecognizer) {
-        containerViewHeightConstraint?.constant = defaultHeight
-        view.layoutIfNeeded()
+        /* FIXO */
+        /*containerViewHeightConstraint?.constant = defaultHeight
+         view.layoutIfNeeded()*/
+        
+        /* SCROLLAVEL */
+        let translation = gesture.translation(in: view)
+        let isDraggingDown = translation.y > 0
+        let newHeight = currentContainerHeight - translation.y
+        
+        switch gesture.state {
+        case .changed:
+            if newHeight < maximumContainerHeight {
+                containerViewHeightConstraint?.constant = newHeight
+                view.layoutIfNeeded()
+            }
+        case .ended:
+            if newHeight < dismissibleHeight {
+                self.animateDismissView()
+            } else if newHeight < defaultHeight {
+                animateContainerHeight(defaultHeight)
+            } else if newHeight < maximumContainerHeight && isDraggingDown {
+                animateContainerHeight(defaultHeight)
+            } else if newHeight > defaultHeight && !isDraggingDown {
+                animateContainerHeight(maximumContainerHeight)
+            }
+        default:
+            break
+        }
+    }
+    
+    func animateContainerHeight(_ height: CGFloat) {
+        UIView.animate(withDuration: 0.4) {
+            self.containerViewHeightConstraint?.constant = height
+            self.view.layoutIfNeeded()
+        }
+        currentContainerHeight = height
     }
     
     func animatePresentContainer() {
@@ -181,4 +288,3 @@ class BottomSheetDialog: UIViewController {
         }
     }
 }
-
