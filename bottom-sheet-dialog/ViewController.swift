@@ -14,24 +14,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func openDialogPressed(_ sender: Any) {
-        print("LOG >> CLICOU")
-        let vc = BottomSheetDialog(
+        let dialog = BottomSheetDialog(
             style: .DEFAULT,
-            isScrollable: true,
+            isScrollable: false,
             icon: UIImage(named: "icon_check")!,
-            titleLabel: "Titulo",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin iaculis massa et nisi volutpat laoreet. Mauris nec tincidunt lacus. Quisque consequat mi a sem semper malesuada. Vivamus mauris urna, interdum in urna eu, cursus consectetur est. Praesent malesuada a arcu eu tincidunt. ",
-            titleFirstButton: "PRIMEIRO BOTÃO",
+            titleLabel: "Atenção",
+            description: "Estamos passando por problemas. \nVolte mais tarde.",
+            titleFirstButton: "Entendi",
             actionFirstButton: {
                 print("LOG >> AÇAO PRIMEIRO BOTAO")
             },
-            titleSecondButton: "SEGUNDO BOTÃO",
+            titleSecondButton: "Voltar",
             actionSecondButton: {
                 print("LOG >> AÇAO SEGUNDO BOTAO")
             }
         )!
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
+        dialog.modalPresentationStyle = .overCurrentContext
+        self.present(dialog, animated: false)
     }
     
 }

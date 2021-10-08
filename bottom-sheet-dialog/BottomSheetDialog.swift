@@ -10,6 +10,12 @@ import SnapKit
 
 class BottomSheetDialog: UIViewController {
     
+    private var pickBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
@@ -23,12 +29,12 @@ class BottomSheetDialog: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.text = ""
         label.font = .systemFont(ofSize: 14)
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.center = .zero
         label.sizeToFit()
         return label
     }()
@@ -37,7 +43,7 @@ class BottomSheetDialog: UIViewController {
         let spacer = UIView()
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
-        stackView.spacing = 12.0
+        stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -46,7 +52,7 @@ class BottomSheetDialog: UIViewController {
         let spacer = UIView()
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .horizontal
-        stackView.spacing = 12.0
+        stackView.spacing = 10.0
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -70,10 +76,10 @@ class BottomSheetDialog: UIViewController {
         return view
     }()
     
-    private var defaultHeight: CGFloat = 320
-    private var dismissibleHeight: CGFloat = 220
+    private var defaultHeight: CGFloat = 340
+    private var dismissibleHeight: CGFloat = 240
     private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 64
-    private var currentContainerHeight: CGFloat = 320
+    private var currentContainerHeight: CGFloat = 340
     
     private lazy var icon = UIImageView(frame: .zero)
     private var image = UIImage()
@@ -123,46 +129,31 @@ class BottomSheetDialog: UIViewController {
     }
     
     private func setStyle() {
+        defaultHeight = 340
+        dismissibleHeight = 240
+        currentContainerHeight = 340
+        
+        contentStackView.addArrangedSubview(buttonOne)
+        
         switch self.style {
-            case .DEFAULT:
-                contentStackView.addArrangedSubview(buttonOne)
-                contentStackView.addArrangedSubview(buttonTwo)
+        case .DEFAULT, .DOUBLE_BUTTON:
+            contentStackView.addArrangedSubview(buttonTwo)
+            break
+        case .SINGLE_BUTTON:
+            defaultHeight = 270
+            dismissibleHeight = 170
+            currentContainerHeight = 270
+            break
+        case .BUTTON_SIDE_BY_SIDE:
+            contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
+            contentStackView.addArrangedSubview(contentHorizontalButtonsStackView)
             
-                defaultHeight = 320
-                dismissibleHeight = 220
-                currentContainerHeight = 320
-                break
-            case .SINGLE_BUTTON:
-                contentStackView.addArrangedSubview(buttonOne)
-            
-                defaultHeight = 250
-                dismissibleHeight = 150
-                currentContainerHeight = 250
-                break
-            case .DOUBLE_BUTTON:
-                contentStackView.addArrangedSubview(buttonOne)
-                contentStackView.addArrangedSubview(buttonTwo)
-            
-                defaultHeight = 320
-                dismissibleHeight = 220
-                currentContainerHeight = 320
-                break
-            case .BUTTON_SIDE_BY_SIDE:
-                contentHorizontalButtonsStackView.addArrangedSubview(buttonOne)
-                contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
-                contentStackView.addArrangedSubview(contentHorizontalButtonsStackView)
-            
-                defaultHeight = 250
-                dismissibleHeight = 150
-                currentContainerHeight = 250
-                break
-            default:
-                contentStackView.addArrangedSubview(buttonOne)
-            
-                defaultHeight = 320
-                dismissibleHeight = 220
-                currentContainerHeight = 320
-                break
+            defaultHeight = 270
+            dismissibleHeight = 170
+            currentContainerHeight = 270
+            break
+        default:
+            return
         }
     }
     
@@ -192,11 +183,13 @@ class BottomSheetDialog: UIViewController {
     
     @objc func firstButtonActionPressed(sender: UIButton!) {
         print("LOG >> FIRST BUTTON ACTION")
+        animateDismissView()
         actionFirstButton!()
     }
     
     @objc func secondButtonActionPressed(sender: UIButton!) {
         print("LOG >> SECOND BUTTON ACTION")
+        animateDismissView()
         actionSecondButton!()
     }
     
@@ -204,6 +197,7 @@ class BottomSheetDialog: UIViewController {
         view.addSubview(dimmedView)
         view.addSubview(containerView)
         
+        containerView.addSubview(pickBar)
         containerView.addSubview(icon)
         contentStackView.addArrangedSubview(titleLabel)
         contentStackView.addArrangedSubview(descriptionLabel)
@@ -212,39 +206,35 @@ class BottomSheetDialog: UIViewController {
         
         containerView.addSubview(contentStackView)
         
+        dimmedView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+        
+        pickBar.snp.makeConstraints { make in
+            make.top.equalTo(containerView).offset(8)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(70)
+            make.height.equalTo(4)
+        }
+        
         icon.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15)
+            make.topMargin.equalTo(pickBar).offset(30)
             make.centerX.equalToSuperview()
             make.width.equalTo(30)
             make.height.equalTo(30)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(icon).offset(40)
-            make.topMargin.equalTo(40)
-            make.height.equalTo(40)
+            make.topMargin.equalTo(icon).offset(25)
+            make.height.equalTo(30)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel).offset(30)
-            make.topMargin.equalTo(10)
+            make.topMargin.equalTo(titleLabel).offset(5)
             make.height.equalTo(70)
-        }
-        
-        buttonOne.snp.makeConstraints { make in
-            make.topMargin.equalToSuperview().inset(15)
-            make.height.equalTo(50)
-        }
-        
-        buttonTwo.snp.makeConstraints { make in
-            make.height.equalTo(50)
-        }
-        
-        dimmedView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
         }
         
         containerView.snp.makeConstraints { make in
@@ -255,10 +245,17 @@ class BottomSheetDialog: UIViewController {
         }
         
         contentStackView.snp.makeConstraints { make in
-            make.top.equalTo(containerView).offset(32)
-            //make.bottom.equalTo(containerView).inset(20)
+            make.topMargin.equalTo(descriptionLabel).offset(5)
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
+        }
+        
+        buttonOne.snp.makeConstraints { make in
+            make.height.equalTo(50)
+        }
+        
+        buttonTwo.snp.makeConstraints { make in
+            make.height.equalTo(50)
         }
     }
     
