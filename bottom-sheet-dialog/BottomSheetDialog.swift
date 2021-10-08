@@ -12,7 +12,8 @@ class BottomSheetDialog: UIViewController {
     
     private var pickBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .gray
+        view.alpha = 0.4
         return view
     }()
     
@@ -39,7 +40,7 @@ class BottomSheetDialog: UIViewController {
         return label
     }()
     
-    private lazy var contentStackView: UIStackView = {
+    private lazy var contentVerticalButtonsStackView: UIStackView = {
         let spacer = UIView()
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
@@ -52,7 +53,7 @@ class BottomSheetDialog: UIViewController {
         let spacer = UIView()
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .horizontal
-        stackView.spacing = 10.0
+        stackView.spacing = 6.0
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -133,26 +134,29 @@ class BottomSheetDialog: UIViewController {
         dismissibleHeight = 240
         currentContainerHeight = 340
         
-        contentStackView.addArrangedSubview(buttonOne)
-        
         switch self.style {
-        case .DEFAULT, .DOUBLE_BUTTON:
-            contentStackView.addArrangedSubview(buttonTwo)
+        case .DEFAULT:
+            contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
+            contentVerticalButtonsStackView.addArrangedSubview(buttonTwo)
             break
         case .SINGLE_BUTTON:
+            contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
+            
             defaultHeight = 270
             dismissibleHeight = 170
             currentContainerHeight = 270
             break
         case .BUTTON_SIDE_BY_SIDE:
+            contentHorizontalButtonsStackView.addArrangedSubview(buttonOne)
             contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
-            contentStackView.addArrangedSubview(contentHorizontalButtonsStackView)
+            contentVerticalButtonsStackView.addArrangedSubview(contentHorizontalButtonsStackView)
             
             defaultHeight = 270
             dismissibleHeight = 170
             currentContainerHeight = 270
             break
         default:
+            contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
             return
         }
     }
@@ -182,13 +186,11 @@ class BottomSheetDialog: UIViewController {
     }
     
     @objc func firstButtonActionPressed(sender: UIButton!) {
-        print("LOG >> FIRST BUTTON ACTION")
         animateDismissView()
         actionFirstButton!()
     }
     
     @objc func secondButtonActionPressed(sender: UIButton!) {
-        print("LOG >> SECOND BUTTON ACTION")
         animateDismissView()
         actionSecondButton!()
     }
@@ -199,18 +201,25 @@ class BottomSheetDialog: UIViewController {
         
         containerView.addSubview(pickBar)
         containerView.addSubview(icon)
-        contentStackView.addArrangedSubview(titleLabel)
-        contentStackView.addArrangedSubview(descriptionLabel)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(descriptionLabel)
         
         self.setStyle()
         
-        containerView.addSubview(contentStackView)
+        containerView.addSubview(contentVerticalButtonsStackView)
         
         dimmedView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
+        }
+        
+        containerView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            self.containerViewHeightConstraint = make.height.equalTo(defaultHeight).constraint.layoutConstraints.first
+            self.containerViewBottomConstraint = make.bottom.equalTo(defaultHeight).constraint.layoutConstraints.first
         }
         
         pickBar.snp.makeConstraints { make in
@@ -228,24 +237,19 @@ class BottomSheetDialog: UIViewController {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.topMargin.equalTo(icon).offset(25)
+            make.topMargin.equalTo(icon).offset(40)
+            make.centerX.equalToSuperview()
             make.height.equalTo(30)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.topMargin.equalTo(titleLabel).offset(5)
+            make.topMargin.equalTo(titleLabel).offset(30)
+            make.centerX.equalToSuperview()
             make.height.equalTo(70)
         }
         
-        containerView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            self.containerViewHeightConstraint = make.height.equalTo(defaultHeight).constraint.layoutConstraints.first
-            self.containerViewBottomConstraint = make.bottom.equalTo(defaultHeight).constraint.layoutConstraints.first
-        }
-        
-        contentStackView.snp.makeConstraints { make in
-            make.topMargin.equalTo(descriptionLabel).offset(5)
+        contentVerticalButtonsStackView.snp.makeConstraints { make in
+            make.topMargin.equalTo(descriptionLabel).offset(70)
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
         }
