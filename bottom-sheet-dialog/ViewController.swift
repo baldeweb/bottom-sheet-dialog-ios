@@ -15,8 +15,6 @@ class ViewController: UIViewController {
     
     @IBAction func openDialogPressed(_ sender: Any) {
         let dialog = BottomSheetDialog(
-            style: .DEFAULT,
-            isScrollable: false,
             icon: UIImage(named: "icon_check")!,
             titleLabel: "Atenção",
             description: "Estamos passando por problemas. \nVolte mais tarde.",

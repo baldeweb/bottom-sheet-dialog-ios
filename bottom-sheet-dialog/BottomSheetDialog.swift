@@ -87,7 +87,7 @@ class BottomSheetDialog: UIViewController {
     private lazy var buttonOne = UIButton(frame: .zero)
     private lazy var buttonTwo = UIButton(frame: .zero)
     private let maxDimmedAlpha: CGFloat = 0.6
-    private var isScrollable: Bool = false
+    private var isScrollable: Bool? = false
     private var style: DialogStyleEnum?
     
     private var containerViewHeightConstraint: NSLayoutConstraint?
@@ -98,8 +98,8 @@ class BottomSheetDialog: UIViewController {
     var actionSecondButton: (() -> Void)?
     
     init?(
-        style: DialogStyleEnum,
-        isScrollable: Bool,
+        style: DialogStyleEnum? = nil,
+        isScrollable: Bool? = nil,
         icon: UIImage,
         titleLabel: String, description: String,
         titleFirstButton: String, actionFirstButton: @escaping () -> Void,
@@ -134,31 +134,37 @@ class BottomSheetDialog: UIViewController {
         dismissibleHeight = 240
         currentContainerHeight = 340
         
-        switch self.style {
-        case .DEFAULT:
+        if self.style != nil {
+            switch self.style {
+            case .DEFAULT:
+                contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
+                contentVerticalButtonsStackView.addArrangedSubview(buttonTwo)
+                break
+            case .SINGLE_BUTTON:
+                contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
+                
+                defaultHeight = 270
+                dismissibleHeight = 170
+                currentContainerHeight = 270
+                break
+            case .BUTTON_SIDE_BY_SIDE:
+                contentHorizontalButtonsStackView.addArrangedSubview(buttonOne)
+                contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
+                contentVerticalButtonsStackView.addArrangedSubview(contentHorizontalButtonsStackView)
+                
+                defaultHeight = 270
+                dismissibleHeight = 170
+                currentContainerHeight = 270
+                break
+            default:
+                contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
+                return
+            }
+        } else {
             contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
             contentVerticalButtonsStackView.addArrangedSubview(buttonTwo)
-            break
-        case .SINGLE_BUTTON:
-            contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
-            
-            defaultHeight = 270
-            dismissibleHeight = 170
-            currentContainerHeight = 270
-            break
-        case .BUTTON_SIDE_BY_SIDE:
-            contentHorizontalButtonsStackView.addArrangedSubview(buttonOne)
-            contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
-            contentVerticalButtonsStackView.addArrangedSubview(contentHorizontalButtonsStackView)
-            
-            defaultHeight = 270
-            dismissibleHeight = 170
-            currentContainerHeight = 270
-            break
-        default:
-            contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
-            return
         }
+        
     }
     
     @objc func handleCloseAction() {
@@ -276,7 +282,7 @@ class BottomSheetDialog: UIViewController {
     }
     
     @objc func handlePanGesture(gesture: UIPanGestureRecognizer) {
-        if isScrollable {
+        if isScrollable == true {
             let translation = gesture.translation(in: view)
             let isDraggingDown = translation.y > 0
             let newHeight = currentContainerHeight - translation.y
