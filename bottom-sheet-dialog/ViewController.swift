@@ -16,8 +16,8 @@ class ViewController: UIViewController {
     @IBAction func openDialogPressed(_ sender: Any) {
         print("LOG >> CLICOU")
         let vc = BottomSheetDialog(
-            style: .SINGLE_BUTTON,
-            isScrollable: false,
+            style: .DEFAULT,
+            isScrollable: true,
             icon: UIImage(named: "icon_check")!,
             titleLabel: "Titulo",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin iaculis massa et nisi volutpat laoreet. Mauris nec tincidunt lacus. Quisque consequat mi a sem semper malesuada. Vivamus mauris urna, interdum in urna eu, cursus consectetur est. Praesent malesuada a arcu eu tincidunt. ",

@@ -124,7 +124,7 @@ class BottomSheetDialog: UIViewController {
     
     private func setStyle() {
         switch self.style {
-            case .SIMPLE:
+            case .DEFAULT:
                 contentStackView.addArrangedSubview(buttonOne)
                 contentStackView.addArrangedSubview(buttonTwo)
             
@@ -177,16 +177,14 @@ class BottomSheetDialog: UIViewController {
     }
     
     func setupView() {
-        self.buttonOne = Button(frame: .zero).Build(
+        self.buttonOne = BlueButton(frame: .zero).Build(
             context: self,
-            style: .RED,
             title: titleFirstButton,
             selector: #selector(firstButtonActionPressed)
         )
         
-        self.buttonTwo = Button(frame: .zero).Build(
+        self.buttonTwo = WhiteButton(frame: .zero).Build(
             context: self,
-            style: .DEFAULT,
             title: titleSecondButton!,
             selector: #selector(secondButtonActionPressed)
         )
