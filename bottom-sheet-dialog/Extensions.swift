@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-//--------------------------------------------------
-// MARK: - UIView
-//--------------------------------------------------
-
 extension UIView {
     func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
         let roundedLayer = CAShapeLayer()
@@ -26,7 +22,7 @@ extension UIView {
     
     func fadeTo(
         _ alpha: CGFloat,
-        duration: TimeInterval = 0.3,
+        duration: TimeInterval = 0.1,
         delay: TimeInterval = 0,
         completion: (() -> Void)? = nil) {
         
@@ -45,11 +41,11 @@ extension UIView {
         }
     }
     
-    func fadeIn(duration: TimeInterval = 0.3, delay: TimeInterval = 0, completion: (() -> Void)? = nil) {
+    func fadeIn(duration: TimeInterval = 0.1, delay: TimeInterval = 0, completion: (() -> Void)? = nil) {
         fadeTo(1, duration: duration, delay: delay, completion: completion)
     }
     
-    func fadeOut(duration: TimeInterval = 0.3, delay: TimeInterval = 0, completion: (() -> Void)? = nil) {
+    func fadeOut(duration: TimeInterval = 0.1, delay: TimeInterval = 0, completion: (() -> Void)? = nil) {
         fadeTo(0, duration: duration, delay: delay, completion: completion)
     }
 }

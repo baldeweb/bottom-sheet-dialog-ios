@@ -8,19 +8,27 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     @IBAction func openDialogPressed(_ sender: Any) {
-        print("LOG >> CLICOU")
-        
-        let vc = BottomSheetDialog()
-        vc.modalPresentationStyle = .overCurrentContext
-        // keep false
-        // modal animation will be handled in VC itself
-        self.present(vc, animated: false)
+        let dialog = BottomSheetDialog(
+            icon: UIImage(named: "icon_check")!,
+            titleLabel: "Atenção",
+            description: "Estamos passando por problemas. \nVolte mais tarde.",
+            titleFirstButton: "Entendi",
+            actionFirstButton: {
+                print("LOG >> AÇAO PRIMEIRO BOTAO")
+            },
+            titleSecondButton: "Voltar",
+            actionSecondButton: {
+                print("LOG >> AÇAO SEGUNDO BOTAO")
+            }
+        )!
+        dialog.modalPresentationStyle = .overCurrentContext
+        self.present(dialog, animated: false)
     }
     
 }
