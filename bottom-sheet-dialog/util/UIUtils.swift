@@ -31,27 +31,19 @@ func hexStringToUIColor(hex:String) -> UIColor {
 }
 
 extension String {
-    func executeNonNull(_ onExecute: (String) -> Void) {
-        if self != nil {
-            onExecute(self)
-        } else {
-            return
-        }
+    func onExecute(_ onExecute: (String) -> Void) {
+        onExecute(self)
     }
 }
 
 extension UIImage {
-    func executeNonNull(_ onExecute: (UIImage) -> Void) {
-        if self != nil {
-            onExecute(self)
-        }
+    func onExecute(_ onExecute: (UIImage) -> Void) {
+        onExecute(self)
     }
 }
 
 extension UIView {
-    func executeNonNull(_ onExecute: (UIView) -> Void) {
-        if self != nil {
-            onExecute(self)
-        }
+    func onExecute(_ onExecute: (UIView) -> Void) {
+        onExecute(self)
     }
 }
