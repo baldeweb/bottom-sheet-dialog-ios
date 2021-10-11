@@ -191,7 +191,7 @@ class BottomSheetDialog: UIViewController {
             selector: #selector(firstButtonActionPressed)
         )
         
-        titleSecondButton?.executeNonNull{ _ in
+        titleSecondButton?.onExecute{ _ in
             self.buttonTwo = WhiteButton(frame: .zero).build(
                 context: self,
                 title: titleSecondButton!,
@@ -216,17 +216,17 @@ class BottomSheetDialog: UIViewController {
         
         containerView.addSubview(pickBar)
         
-        icon?.executeNonNull { _view in
+        icon?.onExecute { _view in
             image = UIImageView(image: _view)
             containerView.addSubview(image!)
         }
         
-        titleLabel.executeNonNull { _view in
+        titleLabel.onExecute { _view in
             self.titleLabel.text = titleDialog
             containerView.addSubview(_view)
         }
         
-        descriptionLabel.executeNonNull { _view in
+        descriptionLabel.onExecute { _view in
             self.descriptionLabel.text = descriptionDialog
             containerView.addSubview(_view)
         }
@@ -256,7 +256,7 @@ class BottomSheetDialog: UIViewController {
             make.height.equalTo(4)
         }
         
-        icon?.executeNonNull { _view in
+        icon?.onExecute { _view in
             image!.snp.makeConstraints { make in
                 make.topMargin.equalTo(pickBar).offset(30)
                 make.centerX.equalToSuperview()
@@ -265,17 +265,17 @@ class BottomSheetDialog: UIViewController {
             }
         }
         
-        titleDialog?.executeNonNull { _ in
+        titleDialog?.onExecute { _ in
             titleLabel.snp.makeConstraints { make in
                 if icon == nil { make.topMargin.equalTo(pickBar).offset(30) }
-                icon?.executeNonNull { _view in make.topMargin.equalTo(image!).offset(40) }
+                icon?.onExecute { _view in make.topMargin.equalTo(image!).offset(40) }
                 
                 make.centerX.equalToSuperview()
                 make.height.equalTo(30)
             }
         }
         
-        descriptionDialog?.executeNonNull { _ in
+        descriptionDialog?.onExecute { _ in
             descriptionLabel.snp.makeConstraints { make in
                 make.topMargin.equalTo(titleLabel).offset(30)
                 make.centerX.equalToSuperview()
@@ -285,7 +285,7 @@ class BottomSheetDialog: UIViewController {
         
         contentVerticalButtonsStackView.snp.makeConstraints { make in
             if descriptionDialog == nil { make.topMargin.equalTo(titleLabel).offset(35) }
-            descriptionDialog?.executeNonNull { _ in make.topMargin.equalTo(descriptionLabel).offset(70) }
+            descriptionDialog?.onExecute { _ in make.topMargin.equalTo(descriptionLabel).offset(70) }
             
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
@@ -295,7 +295,7 @@ class BottomSheetDialog: UIViewController {
             make.height.equalTo(50)
         }
         
-        titleSecondButton?.executeNonNull { _ in
+        titleSecondButton?.onExecute { _ in
             buttonTwo.snp.makeConstraints { make in
                 make.height.equalTo(50)
             }
