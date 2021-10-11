@@ -18,8 +18,8 @@ class WhiteButton: Button {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func Build(context: UIViewController, title: String, selector: Selector) -> UIButton {
-        super.Build(context: context, title: title, selector: selector)
+    override func build(context: UIViewController, title: String, selector: Selector) -> UIButton {
+        super.build(context: context, title: title, selector: selector)
         button?.setTitleColor(hexStringToUIColor(hex: "#616161"), for: .normal)
         button?.backgroundColor =  hexStringToUIColor(hex: "#E0E0E0")
         return button!

@@ -17,7 +17,7 @@ open class Button: UIButton {
         button = UIButton(frame: frame)
     }
     
-    func Build(context: UIViewController, title: String, selector: Selector) -> UIButton {
+    func build(context: UIViewController, title: String, selector: Selector) -> UIButton {
         button?.setTitle(title, for: .normal)
         button?.layer.cornerRadius = 25
         button?.layer.masksToBounds = true

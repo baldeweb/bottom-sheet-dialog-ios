@@ -82,33 +82,35 @@ class BottomSheetDialog: UIViewController {
     private let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 64
     private var currentContainerHeight: CGFloat = 340
     
-    private lazy var icon = UIImageView(frame: .zero)
-    private var image = UIImage()
     private lazy var buttonOne = UIButton(frame: .zero)
     private lazy var buttonTwo = UIButton(frame: .zero)
+    private var image: UIImageView?
+    private var icon: UIImage?
     private let maxDimmedAlpha: CGFloat = 0.6
     private var isScrollable: Bool? = false
     private var style: DialogStyleEnum?
-    
     private var containerViewHeightConstraint: NSLayoutConstraint?
     private var containerViewBottomConstraint: NSLayoutConstraint?
-    var titleFirstButton: String = ""
-    var titleSecondButton: String? = ""
-    var actionFirstButton: (() -> Void)?
-    var actionSecondButton: (() -> Void)?
+    
+    private var titleDialog: String?
+    private var descriptionDialog: String?
+    private var titleFirstButton: String? = ""
+    private var titleSecondButton: String? = ""
+    private var actionFirstButton: (() -> Void)?
+    private var actionSecondButton: (() -> Void)?
     
     init?(
         style: DialogStyleEnum? = nil,
         isScrollable: Bool? = nil,
-        icon: UIImage,
-        titleLabel: String, description: String,
+        icon: UIImage? = nil,
+        titleLabel: String? = nil, description: String? = nil,
         titleFirstButton: String, actionFirstButton: @escaping () -> Void,
         titleSecondButton: String? = nil, actionSecondButton: (() -> Void)? = nil
     ) {
         super.init(nibName: nil, bundle: nil)
-        self.icon = UIImageView(image: icon)
-        self.titleLabel.text = titleLabel
-        self.descriptionLabel.text = description
+        self.icon = icon
+        self.titleDialog = titleLabel
+        self.descriptionDialog = description
         self.isScrollable = isScrollable
         self.titleFirstButton = titleFirstButton
         self.actionFirstButton = actionFirstButton
@@ -130,36 +132,41 @@ class BottomSheetDialog: UIViewController {
     }
     
     private func setStyle() {
-        defaultHeight = 340
-        dismissibleHeight = 240
-        currentContainerHeight = 340
-        
-        if self.style != nil {
-            switch self.style {
-            case .DEFAULT:
-                contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
-                contentVerticalButtonsStackView.addArrangedSubview(buttonTwo)
-                break
-            case .SINGLE_BUTTON:
-                contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
-                
-                defaultHeight = 270
-                dismissibleHeight = 170
-                currentContainerHeight = 270
-                break
-            case .BUTTON_SIDE_BY_SIDE:
-                contentHorizontalButtonsStackView.addArrangedSubview(buttonOne)
-                contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
-                contentVerticalButtonsStackView.addArrangedSubview(contentHorizontalButtonsStackView)
-                
-                defaultHeight = 270
-                dismissibleHeight = 170
-                currentContainerHeight = 270
-                break
-            default:
-                contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
-                return
+        if self.style == nil || self.style == .DEFAULT {
+            contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
+            contentVerticalButtonsStackView.addArrangedSubview(buttonTwo)
+            
+            if icon == nil {
+                defaultHeight = defaultHeight - 30
+                dismissibleHeight = dismissibleHeight - 30
+                currentContainerHeight = currentContainerHeight - 30
             }
+            
+            if titleDialog == nil {
+                defaultHeight = defaultHeight - 30
+                dismissibleHeight = dismissibleHeight - 30
+                currentContainerHeight = currentContainerHeight - 30
+            }
+            
+            if descriptionDialog == nil {
+                defaultHeight = defaultHeight - 70
+                dismissibleHeight = dismissibleHeight - 70
+                currentContainerHeight = currentContainerHeight - 70
+            }
+            
+            if titleSecondButton == nil || actionSecondButton == nil {
+                defaultHeight = defaultHeight - 50
+                dismissibleHeight = dismissibleHeight - 50
+                currentContainerHeight = currentContainerHeight - 50
+            }
+        } else if self.style != nil && self.style == .SIDE_BY_SIDE {
+            contentHorizontalButtonsStackView.addArrangedSubview(buttonOne)
+            contentHorizontalButtonsStackView.addArrangedSubview(buttonTwo)
+            contentVerticalButtonsStackView.addArrangedSubview(contentHorizontalButtonsStackView)
+            
+            defaultHeight = 270
+            dismissibleHeight = 170
+            currentContainerHeight = 270
         } else {
             contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
             contentVerticalButtonsStackView.addArrangedSubview(buttonTwo)
@@ -178,17 +185,19 @@ class BottomSheetDialog: UIViewController {
     }
     
     func setupView() {
-        self.buttonOne = BlueButton(frame: .zero).Build(
+        self.buttonOne = BlueButton(frame: .zero).build(
             context: self,
-            title: titleFirstButton,
+            title: titleFirstButton!,
             selector: #selector(firstButtonActionPressed)
         )
         
-        self.buttonTwo = WhiteButton(frame: .zero).Build(
-            context: self,
-            title: titleSecondButton!,
-            selector: #selector(secondButtonActionPressed)
-        )
+        titleSecondButton?.executeNonNull{ _ in
+            self.buttonTwo = WhiteButton(frame: .zero).build(
+                context: self,
+                title: titleSecondButton!,
+                selector: #selector(secondButtonActionPressed)
+            )
+        }
     }
     
     @objc func firstButtonActionPressed(sender: UIButton!) {
@@ -206,9 +215,21 @@ class BottomSheetDialog: UIViewController {
         view.addSubview(containerView)
         
         containerView.addSubview(pickBar)
-        containerView.addSubview(icon)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(descriptionLabel)
+        
+        icon?.executeNonNull { _view in
+            image = UIImageView(image: _view)
+            containerView.addSubview(image!)
+        }
+        
+        titleLabel.executeNonNull { _view in
+            self.titleLabel.text = titleDialog
+            containerView.addSubview(_view)
+        }
+        
+        descriptionLabel.executeNonNull { _view in
+            self.descriptionLabel.text = descriptionDialog
+            containerView.addSubview(_view)
+        }
         
         self.setStyle()
         
@@ -235,27 +256,37 @@ class BottomSheetDialog: UIViewController {
             make.height.equalTo(4)
         }
         
-        icon.snp.makeConstraints { make in
-            make.topMargin.equalTo(pickBar).offset(30)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(30)
-            make.height.equalTo(30)
+        icon?.executeNonNull { _view in
+            image!.snp.makeConstraints { make in
+                make.topMargin.equalTo(pickBar).offset(30)
+                make.centerX.equalToSuperview()
+                make.width.equalTo(30)
+                make.height.equalTo(30)
+            }
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.topMargin.equalTo(icon).offset(40)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(30)
+        titleDialog?.executeNonNull { _ in
+            titleLabel.snp.makeConstraints { make in
+                if icon == nil { make.topMargin.equalTo(pickBar).offset(30) }
+                icon?.executeNonNull { _view in make.topMargin.equalTo(image!).offset(40) }
+                
+                make.centerX.equalToSuperview()
+                make.height.equalTo(30)
+            }
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.topMargin.equalTo(titleLabel).offset(30)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(70)
+        descriptionDialog?.executeNonNull { _ in
+            descriptionLabel.snp.makeConstraints { make in
+                make.topMargin.equalTo(titleLabel).offset(30)
+                make.centerX.equalToSuperview()
+                make.height.equalTo(70)
+            }
         }
         
         contentVerticalButtonsStackView.snp.makeConstraints { make in
-            make.topMargin.equalTo(descriptionLabel).offset(70)
+            if descriptionDialog == nil { make.topMargin.equalTo(titleLabel).offset(35) }
+            descriptionDialog?.executeNonNull { _ in make.topMargin.equalTo(descriptionLabel).offset(70) }
+            
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
         }
@@ -264,8 +295,10 @@ class BottomSheetDialog: UIViewController {
             make.height.equalTo(50)
         }
         
-        buttonTwo.snp.makeConstraints { make in
-            make.height.equalTo(50)
+        titleSecondButton?.executeNonNull { _ in
+            buttonTwo.snp.makeConstraints { make in
+                make.height.equalTo(50)
+            }
         }
     }
     

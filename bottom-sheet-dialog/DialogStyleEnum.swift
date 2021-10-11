@@ -9,6 +9,5 @@ import Foundation
 
 enum DialogStyleEnum: String {
     case DEFAULT = "DEFAULT"
-    case SINGLE_BUTTON = "SINGLE_BUTTON"
-    case BUTTON_SIDE_BY_SIDE = "BUTTON_SIDE_BY_SIDE"
+    case SIDE_BY_SIDE = "SIDE_BY_SIDE"
 }
