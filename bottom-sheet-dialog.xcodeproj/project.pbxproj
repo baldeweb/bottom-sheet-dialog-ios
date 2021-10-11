@@ -84,6 +84,7 @@
 		BA6C8E4B270BE0850051471C /* components */ = {
 			isa = PBXGroup;
 			children = (
+				BAF95843270BC2F2008602A0 /* BottomSheetDialog.swift */,
 				BA6C8E4C270BE09B0051471C /* Button.swift */,
 				BA737191270FCA5300C8CED6 /* BlueButton.swift */,
 				BA737193270FCB0300C8CED6 /* WhiteButton.swift */,
@@ -131,7 +132,6 @@
 				BAF95832270BB7A4008602A0 /* LaunchScreen.storyboard */,
 				BAF95835270BB7A4008602A0 /* Info.plist */,
 				BAF9583F270BBA0D008602A0 /* Extensions.swift */,
-				BAF95843270BC2F2008602A0 /* BottomSheetDialog.swift */,
 			);
 			path = "bottom-sheet-dialog";
 			sourceTree = "<group>";
