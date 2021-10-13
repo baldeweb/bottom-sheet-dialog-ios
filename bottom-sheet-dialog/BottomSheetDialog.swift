@@ -159,6 +159,12 @@ class BottomSheetDialog: UIViewController {
     }
     
     private func setStyle() {
+        if layout != nil {
+            defaultHeight = defaultHeight + layout!.view.bounds.height
+            dismissibleHeight = dismissibleHeight + layout!.view.bounds.height
+            currentContainerHeight = currentContainerHeight + layout!.view.bounds.height
+        }
+        
         if self.style == nil || self.style == .DEFAULT {
             contentVerticalButtonsStackView.addArrangedSubview(buttonOne)
             contentVerticalButtonsStackView.addArrangedSubview(buttonTwo)
@@ -258,9 +264,13 @@ class BottomSheetDialog: UIViewController {
             containerView.addSubview(descriptionLabel)
         }
         
-        self.setStyle()
+        if layout != nil {
+            embed(view, layout!)
+        }
         
         containerView.addSubview(contentVerticalButtonsStackView)
+        
+        self.setStyle()
         
         dimmedView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -310,9 +320,21 @@ class BottomSheetDialog: UIViewController {
             }
         }
         
+        if layout != nil {
+            layout?.view.snp.makeConstraints { make in
+                make.topMargin.equalTo(titleLabel).offset(30)
+                make.centerX.equalToSuperview()
+                make.height.greaterThanOrEqualTo(0)
+            }
+        }
+        
         contentVerticalButtonsStackView.snp.makeConstraints { make in
-            if descriptionDialog == nil { make.topMargin.equalTo(titleLabel).offset(35) }
-            if descriptionDialog != nil { make.topMargin.equalTo(descriptionLabel).offset(70) }
+            if layout != nil {
+                make.topMargin.equalTo(layout!.view).offset(35)
+            } else {
+                if descriptionDialog == nil { make.topMargin.equalTo(titleLabel).offset(35) }
+                if descriptionDialog != nil { make.topMargin.equalTo(descriptionLabel).offset(70) }
+            }
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
             make.height.greaterThanOrEqualTo(0)

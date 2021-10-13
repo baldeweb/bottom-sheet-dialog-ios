@@ -29,3 +29,13 @@ func hexStringToUIColor(hex:String) -> UIColor {
         alpha: CGFloat(1.0)
     )
 }
+
+extension UIViewController {
+    func embed(_ view: UIView, _ viewController: UIViewController){
+        viewController.willMove(toParent: self)
+        viewController.view.frame = view.bounds
+        view.addSubview(viewController.view)
+        self.addChild(viewController)
+        viewController.didMove(toParent: self)
+    }
+}

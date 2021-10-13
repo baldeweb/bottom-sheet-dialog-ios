@@ -13,6 +13,7 @@
 		BA6C8E50270BE0D80051471C /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C8E4F270BE0D80051471C /* UIUtils.swift */; };
 		BA737192270FCA5300C8CED6 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA737191270FCA5300C8CED6 /* BlueButton.swift */; };
 		BA737194270FCB0300C8CED6 /* WhiteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA737193270FCB0300C8CED6 /* WhiteButton.swift */; };
+		BA8389A327167A320033BA25 /* LayoutBeautyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8389A227167A320033BA25 /* LayoutBeautyView.swift */; };
 		BAF95828270BB7A3008602A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF95827270BB7A3008602A0 /* AppDelegate.swift */; };
 		BAF9582A270BB7A3008602A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF95829270BB7A3008602A0 /* SceneDelegate.swift */; };
 		BAF9582C270BB7A3008602A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF9582B270BB7A3008602A0 /* ViewController.swift */; };
@@ -32,6 +33,7 @@
 		BA6C8E4F270BE0D80051471C /* UIUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
 		BA737191270FCA5300C8CED6 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		BA737193270FCB0300C8CED6 /* WhiteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButton.swift; sourceTree = "<group>"; };
+		BA8389A227167A320033BA25 /* LayoutBeautyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutBeautyView.swift; sourceTree = "<group>"; };
 		BAF95824270BB7A3008602A0 /* bottom-sheet-dialog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bottom-sheet-dialog.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAF95827270BB7A3008602A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAF95829270BB7A3008602A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				BAF95832270BB7A4008602A0 /* LaunchScreen.storyboard */,
 				BAF95835270BB7A4008602A0 /* Info.plist */,
 				BAF9583F270BBA0D008602A0 /* Extensions.swift */,
+				BA8389A227167A320033BA25 /* LayoutBeautyView.swift */,
 			);
 			path = "bottom-sheet-dialog";
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				BA6C8E50270BE0D80051471C /* UIUtils.swift in Sources */,
 				BAF95844270BC2F2008602A0 /* BottomSheetDialog.swift in Sources */,
 				BAF95828270BB7A3008602A0 /* AppDelegate.swift in Sources */,
+				BA8389A327167A320033BA25 /* LayoutBeautyView.swift in Sources */,
 				BAF9582A270BB7A3008602A0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
