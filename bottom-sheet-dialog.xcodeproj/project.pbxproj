@@ -84,10 +84,8 @@
 		BA6C8E4B270BE0850051471C /* components */ = {
 			isa = PBXGroup;
 			children = (
-				BAF95843270BC2F2008602A0 /* BottomSheetDialog.swift */,
-				BA6C8E4C270BE09B0051471C /* Button.swift */,
-				BA737191270FCA5300C8CED6 /* BlueButton.swift */,
-				BA737193270FCB0300C8CED6 /* WhiteButton.swift */,
+				BA8389A1271658D20033BA25 /* dialog */,
+				BA8389A0271658C90033BA25 /* button */,
 			);
 			name = components;
 			sourceTree = "<group>";
@@ -98,6 +96,24 @@
 				BA6C8E4F270BE0D80051471C /* UIUtils.swift */,
 			);
 			path = util;
+			sourceTree = "<group>";
+		};
+		BA8389A0271658C90033BA25 /* button */ = {
+			isa = PBXGroup;
+			children = (
+				BA6C8E4C270BE09B0051471C /* Button.swift */,
+				BA737191270FCA5300C8CED6 /* BlueButton.swift */,
+				BA737193270FCB0300C8CED6 /* WhiteButton.swift */,
+			);
+			name = button;
+			sourceTree = "<group>";
+		};
+		BA8389A1271658D20033BA25 /* dialog */ = {
+			isa = PBXGroup;
+			children = (
+				BAF95843270BC2F2008602A0 /* BottomSheetDialog.swift */,
+			);
+			name = dialog;
 			sourceTree = "<group>";
 		};
 		BAF9581B270BB7A3008602A0 = {

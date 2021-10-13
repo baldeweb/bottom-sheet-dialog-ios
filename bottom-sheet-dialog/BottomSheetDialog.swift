@@ -286,9 +286,9 @@ class BottomSheetDialog: UIViewController {
         contentVerticalButtonsStackView.snp.makeConstraints { make in
             if descriptionDialog == nil { make.topMargin.equalTo(titleLabel).offset(35) }
             descriptionDialog?.onExecute { _ in make.topMargin.equalTo(descriptionLabel).offset(70) }
-            
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
+            make.height.greaterThanOrEqualTo(0)
         }
         
         buttonOne.snp.makeConstraints { make in

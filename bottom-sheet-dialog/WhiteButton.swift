@@ -21,7 +21,9 @@ class WhiteButton: Button {
     override func build(context: UIViewController, title: String, selector: Selector) -> UIButton {
         super.build(context: context, title: title, selector: selector)
         button?.setTitleColor(hexStringToUIColor(hex: "#616161"), for: .normal)
-        button?.backgroundColor =  hexStringToUIColor(hex: "#E0E0E0")
+        button?.backgroundColor = hexStringToUIColor(hex: "#F5F5F5")
+        button?.layer.borderWidth = 1
+        button?.layer.borderColor = hexStringToUIColor(hex: "#BDBDBD").cgColor
         return button!
     }
 }
