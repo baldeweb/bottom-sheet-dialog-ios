@@ -248,12 +248,12 @@ class BottomSheetDialog: UIViewController {
             containerView.addSubview(image!)
         }
         
-        if titleLabel != nil {
+        if titleDialog != nil {
             self.titleLabel.text = titleDialog
             containerView.addSubview(titleLabel)
         }
         
-        if descriptionLabel != nil {
+        if descriptionDialog != nil {
             self.descriptionLabel.text = descriptionDialog
             containerView.addSubview(descriptionLabel)
         }
