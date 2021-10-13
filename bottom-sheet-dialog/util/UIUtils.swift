@@ -29,21 +29,3 @@ func hexStringToUIColor(hex:String) -> UIColor {
         alpha: CGFloat(1.0)
     )
 }
-
-extension String {
-    func onExecute(_ onExecute: (String) -> Void) {
-        onExecute(self)
-    }
-}
-
-extension UIImage {
-    func onExecute(_ onExecute: (UIImage) -> Void) {
-        onExecute(self)
-    }
-}
-
-extension UIView {
-    func onExecute(_ onExecute: (UIView) -> Void) {
-        onExecute(self)
-    }
-}
