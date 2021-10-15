@@ -19,13 +19,9 @@ class ViewController: UIViewController {
             isScrollable: true,
             icon: UIImage(named: "icon_check")!,
             titleLabel: "Atenção",
-            titleFirstButton: "Entendi",
-            actionFirstButton: {
+            titleActionButton: "Entendi",
+            actionButton: {
                 print("LOG >> AÇAO PRIMEIRO BOTAO")
-            },
-            titleSecondButton: "Voltar",
-            actionSecondButton: {
-                print("LOG >> AÇAO SEGUNDO BOTAO")
             }
         )!
         dialog.modalPresentationStyle = .overCurrentContext

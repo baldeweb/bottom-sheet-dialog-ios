@@ -39,9 +39,11 @@ class LayoutBeautyView : UIViewController {
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
+        view.backgroundColor = hexStringToUIColor(hex: "#E0E0E0")
         return view
     }()
+    
+    private lazy var buttonDefault = UIButton(frame: .zero)
     
     private var defaultHeight: CGFloat = 340
     private var dismissibleHeight: CGFloat = 240
@@ -63,7 +65,20 @@ class LayoutBeautyView : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         setupConstraints()
+    }
+    
+    private func setupView() {
+        self.buttonDefault = WhiteButton(frame: .zero).build(
+            context: self,
+            title: "Clique aqui",
+            selector: #selector(cliqueAqui)
+        )
+    }
+    
+    @objc private func cliqueAqui() {
+        print("LOG >> clique aqui sucesso")
     }
    
     func setupConstraints() {
@@ -74,6 +89,8 @@ class LayoutBeautyView : UIViewController {
             
         self.descriptionLabel.text = descriptionDialog
         containerView.addSubview(descriptionLabel)
+        
+        containerView.addSubview(buttonDefault)
         
         view.snp.makeConstraints { make in
             make.width.equalTo(defaultHeight)
@@ -88,15 +105,25 @@ class LayoutBeautyView : UIViewController {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalTo(containerView).offset(20)
+            make.trailing.equalTo(containerView).inset(20)
             make.height.equalTo(30)
         }
     
         descriptionLabel.snp.makeConstraints { make in
             make.topMargin.equalTo(titleLabel).offset(30)
-            make.centerX.equalToSuperview()
+            make.leading.equalTo(containerView).offset(20)
+            make.trailing.equalTo(containerView).inset(20)
             make.height.equalTo(70)
+        }
+        
+        buttonDefault.snp.makeConstraints { make in
+            make.topMargin.equalTo(descriptionLabel.snp.bottomMargin).offset(30)
+            make.bottom.equalToSuperview().inset(20)
+            make.leading.equalTo(containerView).offset(20)
+            make.trailing.equalTo(containerView).inset(20)
+            make.height.equalTo(50)
         }
     }
 }
