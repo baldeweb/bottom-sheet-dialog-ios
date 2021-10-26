@@ -15,14 +15,15 @@ class ViewController: UIViewController {
     
     @IBAction func openDialogPressed(_ sender: Any) {
         let dialog = BottomSheetDialog(
-            layout: LayoutBeautyView(titleLabel: "Titulo", description: "Descricao")!,
-            isScrollable: true,
             icon: UIImage(named: "icon_check")!,
             titleLabel: "Atenção",
+            description: "Lorem ipsum\nDolor sit amet",
             titleActionButton: "Entendi",
             actionButton: {
                 print("LOG >> AÇAO PRIMEIRO BOTAO")
-            }
+            },
+            titleReturnButton: "Voltar",
+            actionReturnButton: {}
         )!
         dialog.modalPresentationStyle = .overCurrentContext
         self.present(dialog, animated: false)
