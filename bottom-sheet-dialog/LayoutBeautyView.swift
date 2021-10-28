@@ -39,7 +39,7 @@ class LayoutBeautyView : UIViewController {
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = hexStringToUIColor(hex: "#E0E0E0")
+        view.backgroundColor = hexStringToUIColor(hex: "#F5F5F5")
         return view
     }()
     
@@ -80,23 +80,23 @@ class LayoutBeautyView : UIViewController {
     @objc private func cliqueAqui() {
         print("LOG >> clique aqui sucesso")
     }
-   
+    
     func setupConstraints() {
         view.addSubview(containerView)
         
         self.titleLabel.text = titleDialog
         containerView.addSubview(titleLabel)
-            
+        
         self.descriptionLabel.text = descriptionDialog
         containerView.addSubview(descriptionLabel)
         
         containerView.addSubview(buttonDefault)
         
         view.snp.makeConstraints { make in
-            make.width.equalTo(defaultHeight)
-            make.height.equalTo(defaultHeight)
+            make.width.greaterThanOrEqualTo(0)
+            make.height.greaterThanOrEqualTo(0)
         }
-       
+        
         containerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
@@ -110,12 +110,12 @@ class LayoutBeautyView : UIViewController {
             make.trailing.equalTo(containerView).inset(20)
             make.height.equalTo(30)
         }
-    
+        
         descriptionLabel.snp.makeConstraints { make in
             make.topMargin.equalTo(titleLabel).offset(30)
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
-            make.height.equalTo(70)
+            make.height.greaterThanOrEqualTo(0)
         }
         
         buttonDefault.snp.makeConstraints { make in

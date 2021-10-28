@@ -65,7 +65,7 @@ class BottomSheetDialog: UIViewController {
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = hexStringToUIColor(hex: "#F5F5F5")
+        view.backgroundColor = hexStringToUIColor(hex: "#FFFFFF")
         return view
     }()
     
@@ -106,7 +106,7 @@ class BottomSheetDialog: UIViewController {
         isScrollable: Bool? = nil,
         icon: UIImage? = nil,
         titleLabel: String? = nil,
-        titleActionButton: String,
+        titleActionButton: String? = nil,
         actionButton: (() -> Void)? = nil,
         titleReturnButton: String? = nil,
         actionReturnButton: (() -> Void)? = nil
@@ -129,7 +129,7 @@ class BottomSheetDialog: UIViewController {
         icon: UIImage? = nil,
         titleLabel: String? = nil,
         description: String? = nil,
-        titleActionButton: String,
+        titleActionButton: String? = nil,
         actionButton: (() -> Void)? = nil,
         titleReturnButton: String? = nil,
         actionReturnButton: (() -> Void)? = nil
@@ -159,18 +159,19 @@ class BottomSheetDialog: UIViewController {
     }
     
     private func setStyle() {
-        if self.style == nil || self.style == .DEFAULT {
-            contentVerticalButtonsStackView.addArrangedSubview(buttonAction)
-            contentVerticalButtonsStackView.addArrangedSubview(buttonReturn)
-        } else if self.style != nil && self.style == .SIDE_BY_SIDE {
+        if self.style != nil && self.style == .SIDE_BY_SIDE {
             contentHorizontalButtonsStackView.addArrangedSubview(buttonReturn)
             contentHorizontalButtonsStackView.addArrangedSubview(buttonAction)
             contentVerticalButtonsStackView.addArrangedSubview(contentHorizontalButtonsStackView)
         } else {
-            contentVerticalButtonsStackView.addArrangedSubview(buttonAction)
-            contentVerticalButtonsStackView.addArrangedSubview(buttonReturn)
+            if actionButton != nil {
+                contentVerticalButtonsStackView.addArrangedSubview(buttonAction)
+            }
+            
+            if actionReturnButton != nil {
+                contentVerticalButtonsStackView.addArrangedSubview(buttonReturn)
+            }
         }
-        
     }
     
     @objc func handleCloseAction() {
@@ -184,11 +185,13 @@ class BottomSheetDialog: UIViewController {
     }
     
     func setupView() {
-        self.buttonAction = BlueButton(frame: .zero).build(
-            context: self,
-            title: titleActionButton!,
-            selector: #selector(firstButtonActionPressed)
-        )
+        if titleActionButton != nil {
+            self.buttonAction = BlueButton(frame: .zero).build(
+                context: self,
+                title: titleActionButton!,
+                selector: #selector(firstButtonActionPressed)
+            )
+        }
         
         if titleReturnButton != nil {
             self.buttonReturn = WhiteButton(frame: .zero).build(
@@ -273,25 +276,30 @@ class BottomSheetDialog: UIViewController {
             titleLabel.snp.makeConstraints { make in
                 if icon == nil { make.topMargin.equalTo(pickBar).offset(30) }
                 if icon != nil { make.topMargin.equalTo(image!).offset(40) }
-                if layout == nil { make.bottomMargin.equalTo(pickBar).offset(30) }
-                if layout != nil { make.topMargin.equalTo(image!).offset(40) }
                 
-                make.centerX.equalToSuperview()
+                if layout == nil { make.bottomMargin.equalTo(pickBar).offset(30) }
+                if layout != nil && icon != nil {
+                    make.topMargin.equalTo(image!).offset(40)
+                }
+                
+                make.leading.equalTo(containerView).offset(20)
+                make.trailing.equalTo(containerView).inset(20)
                 make.height.equalTo(30)
             }
         }
         
         if descriptionDialog != nil {
             descriptionLabel.snp.makeConstraints { make in
-                make.topMargin.equalTo(titleLabel).offset(30)
-                make.centerX.equalToSuperview()
-                make.height.greaterThanOrEqualTo(70)
+                if titleDialog != nil { make.topMargin.equalTo(titleLabel.snp.bottom).offset(6) }
+                make.leading.equalTo(containerView).offset(20)
+                make.trailing.equalTo(containerView).inset(20)
+                make.height.greaterThanOrEqualTo(0)
             }
         }
         
         if layout != nil {
-            layout?.view.snp.makeConstraints { make in
-                make.topMargin.equalTo(titleLabel.snp.bottomMargin).offset(20)
+            layout!.view.snp.makeConstraints { make in
+                if titleDialog != nil { make.topMargin.equalTo(titleLabel.snp.bottomMargin).offset(20) }
                 make.leading.equalTo(containerView).offset(20)
                 make.trailing.equalTo(containerView).inset(20)
                 make.height.greaterThanOrEqualTo(0)
@@ -302,7 +310,9 @@ class BottomSheetDialog: UIViewController {
             if layout != nil {
                 make.topMargin.equalTo(layout!.view.snp.bottomMargin).offset(20)
             } else {
-                if descriptionDialog == nil { make.topMargin.equalTo(titleLabel).offset(35) }
+                if descriptionDialog == nil && titleDialog != nil {
+                    make.topMargin.equalTo(titleLabel).offset(35)
+                }
                 if descriptionDialog != nil { make.topMargin.equalTo(descriptionLabel.snp.bottomMargin).offset(30) }
             }
             make.leading.equalTo(containerView).offset(20)
@@ -311,8 +321,10 @@ class BottomSheetDialog: UIViewController {
             make.height.greaterThanOrEqualTo(0)
         }
         
-        buttonAction.snp.makeConstraints { make in
-            make.height.equalTo(50)
+        if titleActionButton != nil || actionButton != nil {
+            buttonAction.snp.makeConstraints { make in
+                make.height.equalTo(50)
+            }
         }
         
         if titleReturnButton != nil || actionReturnButton != nil {
