@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         let dialog = BottomSheetDialog(
             layout: layout,
             style: style,
+            isScrollable: isScrollable,
             icon: icon,
             titleLabel: titleLabel,
             titleActionButton: titleActionButton,
@@ -66,6 +67,7 @@ class ViewController: UIViewController {
     ) {
         let dialog = BottomSheetDialog(
             style: style,
+            isScrollable: isScrollable,
             icon: icon,
             titleLabel: titleLabel,
             description: description,

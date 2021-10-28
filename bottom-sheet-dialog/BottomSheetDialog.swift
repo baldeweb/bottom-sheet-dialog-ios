@@ -351,7 +351,6 @@ class BottomSheetDialog: UIViewController {
             let translation = gesture.translation(in: view)
             let isDraggingDown = translation.y > 0
             let newHeight = currentContainerHeight - translation.y
-            print("LOG >> [handlePanGesture] newHeight: \(newHeight)")
             
             switch gesture.state {
             case .changed:
