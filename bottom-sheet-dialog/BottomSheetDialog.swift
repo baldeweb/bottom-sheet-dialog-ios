@@ -393,7 +393,7 @@ class BottomSheetDialog: UIViewController {
     }
     
     func animatePresentContainer() {
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.3) {
             self.containerViewBottomConstraint?.constant = 0
             self.view.layoutIfNeeded()
         }
@@ -401,20 +401,20 @@ class BottomSheetDialog: UIViewController {
     
     func animateShowDimmedView() {
         dimmedView.alpha = 0
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.4) {
             self.dimmedView.alpha = self.maxDimmedAlpha
         }
     }
     
     func animateDismissView() {
         dimmedView.alpha = maxDimmedAlpha
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.4) {
             self.dimmedView.alpha = 0
         } completion: { _ in
             self.dismiss(animated: false)
         }
         
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.3) {
             self.containerViewBottomConstraint?.constant = self.defaultHeight
             self.view.layoutIfNeeded()
         }
