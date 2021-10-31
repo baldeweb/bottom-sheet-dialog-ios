@@ -40,17 +40,17 @@ class BottomSheetLayoutDialog: BottomSheetViewController {
     }
     
     override func viewDidLoad() {
-        includeMiddleComponents = {
-            self.embed(self.containerView, self.layout)
-        }
-        
-        includeConstraintsTitle = { make in
+        addConstraintsHeader = { make in
             if self.icon != nil {
                 make.topMargin.equalTo(self.image!).offset(40)
             }
         }
         
-        includeConstraintsMiddleComponents = {
+        addMiddleComponents = {
+            self.embed(self.containerView, self.layout)
+        }
+        
+        addConstraintsMiddleComponents = {
             self.layout.view.snp.makeConstraints { make in
                 if self.titleDialog != nil {
                     make.topMargin.equalTo(self.titleLabel.snp.bottomMargin).offset(20)
@@ -61,7 +61,7 @@ class BottomSheetLayoutDialog: BottomSheetViewController {
             }
         }
         
-        includeConstratintVerticalStackView = { make in
+        addConstraintsVerticalStackView = { make in
             make.topMargin.equalTo(self.layout.view.snp.bottomMargin).offset(20)
         }
         

@@ -52,14 +52,18 @@ class BottomSheetDialog: BottomSheetViewController {
     }
     
     override func viewDidLoad() {
-        includeMiddleComponents = {
+        addConstraintsHeader = { make in
+            make.bottomMargin.equalTo(self.pickBar).offset(30)
+        }
+        
+        addMiddleComponents = {
             if self.descriptionDialog != nil {
                 self.descriptionLabel.text = self.descriptionDialog
                 self.containerView.addSubview(self.descriptionLabel)
             }
         }
         
-        includeConstraintsMiddleComponents = {
+        addConstraintsMiddleComponents = {
             if self.descriptionDialog != nil {
                 self.descriptionLabel.snp.makeConstraints { make in
                     if self.titleDialog != nil { make.topMargin.equalTo(self.titleLabel.snp.bottom).offset(6) }
@@ -70,7 +74,7 @@ class BottomSheetDialog: BottomSheetViewController {
             }
         }
         
-        includeConstratintVerticalStackView = { make in
+        addConstraintsVerticalStackView = { make in
             if self.descriptionDialog == nil && self.titleDialog != nil {
                 make.topMargin.equalTo(self.titleLabel).offset(35)
             }

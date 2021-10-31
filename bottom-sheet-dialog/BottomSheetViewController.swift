@@ -80,10 +80,10 @@ open class BottomSheetViewController: UIViewController {
     private var containerViewHeightConstraint: NSLayoutConstraint?
     private var containerViewBottomConstraint: NSLayoutConstraint?
     
-    open var includeMiddleComponents: (() -> Void)!
-    open var includeConstraintsMiddleComponents: (() -> Void)!
-    open var includeConstratintVerticalStackView: ((ConstraintMaker) -> Void)!
-    open var includeConstraintsTitle: ((ConstraintMaker) -> Void)!
+    open var addMiddleComponents: (() -> Void)!
+    open var addConstraintsMiddleComponents: (() -> Void)!
+    open var addConstraintsVerticalStackView: ((ConstraintMaker) -> Void)!
+    open var addConstraintsHeader: ((ConstraintMaker) -> Void)!
     
     open var titleDialog: String?
     private var titleActionButton: String? = ""
@@ -194,7 +194,7 @@ open class BottomSheetViewController: UIViewController {
             containerView.addSubview(titleLabel)
         }
         
-        includeMiddleComponents()
+        addMiddleComponents()
         
         containerView.addSubview(contentVerticalButtonsStackView)
         
@@ -236,7 +236,7 @@ open class BottomSheetViewController: UIViewController {
                 if icon == nil { make.topMargin.equalTo(pickBar).offset(30) }
                 if icon != nil { make.topMargin.equalTo(image!).offset(40) }
                 
-                includeConstraintsTitle(make)
+                addConstraintsHeader(make)
                 
                 make.leading.equalTo(containerView).offset(20)
                 make.trailing.equalTo(containerView).inset(20)
@@ -244,10 +244,10 @@ open class BottomSheetViewController: UIViewController {
             }
         }
         
-        includeConstraintsMiddleComponents()
+        addConstraintsMiddleComponents()
         
         contentVerticalButtonsStackView.snp.makeConstraints { make in
-            includeConstratintVerticalStackView(make)
+            addConstraintsVerticalStackView(make)
             make.leading.equalTo(containerView).offset(20)
             make.trailing.equalTo(containerView).inset(20)
             make.bottomMargin.equalTo(containerView)
