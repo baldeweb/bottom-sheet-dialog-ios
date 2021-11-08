@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A178B035A796E60C5E5170A /* Pods_bottom_sheet_dialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C33B9CAB24CBF86C740408D /* Pods_bottom_sheet_dialog.framework */; };
 		BA42B60D270E8AEC0056FD79 /* DialogStyleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA42B60C270E8AEC0056FD79 /* DialogStyleEnum.swift */; };
+		BA6A07D3273956E60088A6CD /* BottomSheetConfirmationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6A07D2273956E60088A6CD /* BottomSheetConfirmationDialog.swift */; };
 		BA6C8E4D270BE09B0051471C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C8E4C270BE09B0051471C /* Button.swift */; };
 		BA6C8E50270BE0D80051471C /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C8E4F270BE0D80051471C /* UIUtils.swift */; };
 		BA737192270FCA5300C8CED6 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA737191270FCA5300C8CED6 /* BlueButton.swift */; };
@@ -31,6 +32,7 @@
 		6427B2D3D3C609B0E502B9E9 /* Pods-bottom-sheet-dialog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bottom-sheet-dialog.release.xcconfig"; path = "Target Support Files/Pods-bottom-sheet-dialog/Pods-bottom-sheet-dialog.release.xcconfig"; sourceTree = "<group>"; };
 		8C33B9CAB24CBF86C740408D /* Pods_bottom_sheet_dialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bottom_sheet_dialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA42B60C270E8AEC0056FD79 /* DialogStyleEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogStyleEnum.swift; sourceTree = "<group>"; };
+		BA6A07D2273956E60088A6CD /* BottomSheetConfirmationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetConfirmationDialog.swift; sourceTree = "<group>"; };
 		BA6C8E4C270BE09B0051471C /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		BA6C8E4F270BE0D80051471C /* UIUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
 		BA737191270FCA5300C8CED6 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				BAF95843270BC2F2008602A0 /* BottomSheetViewController.swift */,
 				BA7D7A3E272EC406001666F4 /* BottomSheetDialog.swift */,
 				BA7D7A40272ECF93001666F4 /* BottomSheetLayoutDialog.swift */,
+				BA6A07D2273956E60088A6CD /* BottomSheetConfirmationDialog.swift */,
 			);
 			name = dialog;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				BAF95840270BBA0D008602A0 /* Extensions.swift in Sources */,
 				BA737192270FCA5300C8CED6 /* BlueButton.swift in Sources */,
 				BA737194270FCB0300C8CED6 /* WhiteButton.swift in Sources */,
+				BA6A07D3273956E60088A6CD /* BottomSheetConfirmationDialog.swift in Sources */,
 				BA6C8E4D270BE09B0051471C /* Button.swift in Sources */,
 				BA7D7A3F272EC406001666F4 /* BottomSheetDialog.swift in Sources */,
 				BA42B60D270E8AEC0056FD79 /* DialogStyleEnum.swift in Sources */,

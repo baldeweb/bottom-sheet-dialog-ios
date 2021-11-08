@@ -125,7 +125,7 @@ open class BottomSheetViewController: UIViewController {
     }
     
     private func setStyle() {
-        if self.style != nil && self.style == .SIDE_BY_SIDE {
+        if self.style != nil && (self.style == .SIDE_BY_SIDE || self.style == .ACTION_BY_ACTION) {
             contentHorizontalButtonsStackView.addArrangedSubview(buttonReturn)
             contentHorizontalButtonsStackView.addArrangedSubview(buttonAction)
             contentVerticalButtonsStackView.addArrangedSubview(contentHorizontalButtonsStackView)
@@ -160,11 +160,19 @@ open class BottomSheetViewController: UIViewController {
         }
         
         if titleReturnButton != nil {
-            self.buttonReturn = WhiteButton(frame: .zero).build(
-                context: self,
-                title: titleReturnButton!,
-                selector: #selector(secondButtonActionPressed)
-            )
+            if style != nil && style == .ACTION_BY_ACTION {
+                self.buttonReturn = BlueButton(frame: .zero).build(
+                    context: self,
+                    title: titleReturnButton!,
+                    selector: #selector(secondButtonActionPressed)
+                )
+            } else {
+                self.buttonReturn = WhiteButton(frame: .zero).build(
+                    context: self,
+                    title: titleReturnButton!,
+                    selector: #selector(secondButtonActionPressed)
+                )
+            }
         }
     }
     
