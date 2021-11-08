@@ -10,4 +10,5 @@ import Foundation
 enum DialogStyleEnum: String {
     case DEFAULT = "DEFAULT"
     case SIDE_BY_SIDE = "SIDE_BY_SIDE"
+    case ACTION_BY_ACTION = "ACTION_BY_ACTION"
 }
