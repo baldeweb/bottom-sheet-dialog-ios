@@ -19,7 +19,7 @@ class WhiteButton: Button {
     }
     
     func build() -> UIButton {
-        setTitleColor(hexStringToUIColor(hex: "#616161"), for: .normal)
+        setTitleColor(hexStringToUIColor(hex: "#666666"), for: .normal)
         backgroundColor = hexStringToUIColor(hex: "#FFFFFF")
         layer.borderWidth = 1
         layer.borderColor = hexStringToUIColor(hex: "#D8D8D8").cgColor
