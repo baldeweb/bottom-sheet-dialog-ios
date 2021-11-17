@@ -70,11 +70,9 @@ class LayoutBeautyView : UIViewController {
     }
     
     private func setupView() {
-        self.buttonDefault = WhiteButton(frame: .zero).build(
-            context: self,
-            title: "Clique aqui",
-            selector: #selector(cliqueAqui)
-        )
+        self.buttonDefault = WhiteButton(context: self,
+                                         title: "Clique aqui",
+                                         selector: #selector(cliqueAqui)).build()
     }
     
     @objc private func cliqueAqui() {

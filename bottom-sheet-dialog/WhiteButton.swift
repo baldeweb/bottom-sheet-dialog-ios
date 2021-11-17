@@ -9,17 +9,15 @@ import Foundation
 import UIKit
 
 class WhiteButton: Button {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(context: UIViewController, title: String, selector: Selector) {
+        super.init(context: context, title: title, selector: selector)
     }
     
     required public init?(coder: NSCoder) {
-        super.init(coder: coder)
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func build(context: UIViewController, title: String, selector: Selector) -> UIButton {
-        super.build(context: context, title: title, selector: selector)
+    func build() -> UIButton {
         button?.setTitleColor(hexStringToUIColor(hex: "#616161"), for: .normal)
         button?.backgroundColor = hexStringToUIColor(hex: "#FFFFFF")
         button?.layer.borderWidth = 1

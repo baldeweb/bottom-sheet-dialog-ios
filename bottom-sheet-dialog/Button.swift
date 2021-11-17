@@ -10,19 +10,13 @@ import UIKit
 
 open class Button: UIButton {
     
-    var button: UIButton?
+    open var button: UIButton?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        button = UIButton(frame: frame)
-    }
-    
-    func build(context: UIViewController, title: String, selector: Selector) -> UIButton {
+    init(context: UIViewController, title: String, selector: Selector) {
+        super.init(frame: .zero)
+        button = UIButton(frame: .zero)
         button?.setTitle(title, for: .normal)
-        button?.layer.cornerRadius = 25
-        button?.layer.masksToBounds = true
         button?.addTarget(context, action: selector, for: .touchUpInside)
-        return button!
     }
     
     required public init?(coder: NSCoder) {

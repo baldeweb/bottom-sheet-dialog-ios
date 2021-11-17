@@ -14,33 +14,33 @@ class ViewController: UIViewController {
     }
     
     @IBAction func openDialogPressed(_ sender: Any) {
-        bottomsheetConfirmationDialog(
-            icon: UIImage(named: "icon_check"),
-            titleLabel: "Lorem Ipsum",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam posuere consequat magna quis consectetur. Sed lobortis ut enim in pretium. Vestibulum viverra, purus sed accumsan facilisis, turpis turpis scelerisque ex, eu ultrices odio leo in neque. Aenean euismod erat a massa egestas malesuada. Aliquam ac lacus dapibus, pulvinar sem a, laoreet justo. Morbi volutpat a neque eu semper. Etiam rutrum leo vel elit viverra accumsan. Mauris sed mattis metus. Vivamus fermentum facilisis urna.",
-            titleLeftButton: "Não",
-            actionLeftButton: {
-
-            },
-            titleRightButton: "Sim",
-            actionRightButton: {
-
-            }
-        )
-        
-//        bottomsheetDialog(
+//        bottomsheetConfirmationDialog(
 //            icon: UIImage(named: "icon_check"),
 //            titleLabel: "Lorem Ipsum",
 //            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam posuere consequat magna quis consectetur. Sed lobortis ut enim in pretium. Vestibulum viverra, purus sed accumsan facilisis, turpis turpis scelerisque ex, eu ultrices odio leo in neque. Aenean euismod erat a massa egestas malesuada. Aliquam ac lacus dapibus, pulvinar sem a, laoreet justo. Morbi volutpat a neque eu semper. Etiam rutrum leo vel elit viverra accumsan. Mauris sed mattis metus. Vivamus fermentum facilisis urna.",
-//            titleActionButton: "Confirmar",
-//            actionButton: {
+//            titleLeftButton: "Não",
+//            actionLeftButton: {
 //
 //            },
-//            titleReturnButton: "Voltar",
-//            actionReturnButton: {
+//            titleRightButton: "Sim",
+//            actionRightButton: {
 //
 //            }
 //        )
+        
+        bottomsheetDialog(
+            icon: UIImage(named: "icon_check"),
+            titleLabel: "Lorem Ipsum",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam posuere consequat magna quis consectetur. Sed lobortis ut enim in pretium. Vestibulum viverra, purus sed accumsan facilisis, turpis turpis scelerisque ex, eu ultrices odio leo in neque. Aenean euismod erat a massa egestas malesuada. Aliquam ac lacus dapibus, pulvinar sem a, laoreet justo. Morbi volutpat a neque eu semper. Etiam rutrum leo vel elit viverra accumsan. Mauris sed mattis metus. Vivamus fermentum facilisis urna.",
+            titleActionButton: "Confirmar",
+            actionButton: {
+
+            },
+            titleReturnButton: "Voltar",
+            actionReturnButton: {
+
+            }
+        )
         
         //        bottomsheetLayoutDialog(
         //            icon: UIImage(named: "icon_check"),

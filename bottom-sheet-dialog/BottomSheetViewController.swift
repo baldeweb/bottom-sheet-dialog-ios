@@ -152,26 +152,20 @@ open class BottomSheetViewController: UIViewController {
     
     func setupView() {
         if titleActionButton != nil {
-            self.buttonAction = BlueButton(frame: .zero).build(
-                context: self,
-                title: titleActionButton!,
-                selector: #selector(firstButtonActionPressed)
-            )
+            self.buttonAction = BlueButton(context: self,
+                                           title: titleActionButton!,
+                                           selector: #selector(firstButtonActionPressed)).build()
         }
         
         if titleReturnButton != nil {
             if style != nil && style == .ACTION_BY_ACTION {
-                self.buttonReturn = BlueButton(frame: .zero).build(
-                    context: self,
-                    title: titleReturnButton!,
-                    selector: #selector(secondButtonActionPressed)
-                )
+                self.buttonReturn = BlueButton(context: self,
+                                               title: titleReturnButton!,
+                                               selector: #selector(secondButtonActionPressed)).build()
             } else {
-                self.buttonReturn = WhiteButton(frame: .zero).build(
-                    context: self,
-                    title: titleReturnButton!,
-                    selector: #selector(secondButtonActionPressed)
-                )
+                self.buttonReturn = WhiteButton(context: self,
+                                                title: titleReturnButton!,
+                                                selector: #selector(secondButtonActionPressed)).build()
             }
         }
     }
