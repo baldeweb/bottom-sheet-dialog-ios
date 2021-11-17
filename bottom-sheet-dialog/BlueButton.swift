@@ -34,8 +34,8 @@ class BlueButton: Button {
     }
     
     private func addGradientBackground(){
-        if let top = self.leftColor, let bottom = self.rightColor{
-            self.setGradientBackground(top, bottom)
+        if let left = self.leftColor, let right = self.rightColor{
+            self.setGradientBackground(left, right)
             self.layoutIfNeeded()
         }
     }
