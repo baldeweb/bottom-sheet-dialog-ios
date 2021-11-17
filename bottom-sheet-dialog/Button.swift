@@ -14,6 +14,8 @@ open class Button: UIButton {
     init(context: UIViewController, title: String, selector: Selector) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
+        layer.cornerRadius = 25
+        layer.masksToBounds = true
         addTarget(context, action: selector, for: .touchUpInside)
     }
     

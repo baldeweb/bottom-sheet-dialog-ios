@@ -23,8 +23,6 @@ class BlueButton: Button {
     
     func build() -> UIButton {
         setTitleColor(.white, for: .normal)
-        layer.cornerRadius = 25
-        layer.masksToBounds = true
         return self
     }
     
