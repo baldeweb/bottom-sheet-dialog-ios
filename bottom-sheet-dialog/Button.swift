@@ -8,15 +8,13 @@
 import Foundation
 import UIKit
 
+@IBDesignable
 open class Button: UIButton {
-    
-    open var button: UIButton?
     
     init(context: UIViewController, title: String, selector: Selector) {
         super.init(frame: .zero)
-        button = UIButton(frame: .zero)
-        button?.setTitle(title, for: .normal)
-        button?.addTarget(context, action: selector, for: .touchUpInside)
+        setTitle(title, for: .normal)
+        addTarget(context, action: selector, for: .touchUpInside)
     }
     
     required public init?(coder: NSCoder) {
