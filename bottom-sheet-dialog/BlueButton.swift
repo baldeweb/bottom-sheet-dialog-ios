@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class BlueButton: Button {
     @IBInspectable open var leftColor: UIColor? = hexStringToUIColor(hex: "007cc3")
-    @IBInspectable open var bottomColor: UIColor? = hexStringToUIColor(hex: "285ec2")
+    @IBInspectable open var rightColor: UIColor? = hexStringToUIColor(hex: "285ec2")
     
     override init(context: UIViewController, title: String, selector: Selector) {
         super.init(context: context, title: title, selector: selector)
@@ -34,7 +34,7 @@ class BlueButton: Button {
     }
     
     private func addGradientBackground(){
-        if let top = self.leftColor, let bottom = self.bottomColor{
+        if let top = self.leftColor, let bottom = self.rightColor{
             self.setGradientBackground(top, bottom)
             self.layoutIfNeeded()
         }
