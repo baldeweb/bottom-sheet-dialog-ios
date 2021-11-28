@@ -79,7 +79,9 @@ open class BottomSheetViewController: UIViewController {
     private var style: DialogStyleEnum?
     private var containerViewHeightConstraint: NSLayoutConstraint?
     private var containerViewBottomConstraint: NSLayoutConstraint?
+    private var layoutInfo: UIViewController?
     
+//    open var addInfoLayout: ((UIViewController) -> Void)!
     open var addMiddleComponents: (() -> Void)!
     open var addConstraintsMiddleComponents: (() -> Void)!
     open var addConstraintsVerticalStackView: ((ConstraintMaker) -> Void)!
@@ -119,6 +121,7 @@ open class BottomSheetViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        addComponentsView()
         setupConstraints()
         setupPanGestureHandleClose()
         setupPanGestureInteraction()
@@ -150,39 +153,38 @@ open class BottomSheetViewController: UIViewController {
         animatePresentContainer()
     }
     
+    @objc func actionButtonPressed(sender: UIButton!) {
+        animateDismissView()
+        actionButton!()
+    }
+    
+    @objc func returnButtonPressed(sender: UIButton!) {
+        animateDismissView()
+        actionReturnButton!()
+    }
+    
     func setupView() {
         if titleActionButton != nil {
             self.buttonAction = BlueButton(context: self,
                                            title: titleActionButton!,
-                                           selector: #selector(firstButtonActionPressed)).build()
+                                           selector: #selector(actionButtonPressed)).build()
         }
         
         if titleReturnButton != nil {
             if style != nil && style == .ACTION_BY_ACTION {
                 self.buttonReturn = BlueButton(context: self,
                                                title: titleReturnButton!,
-                                               selector: #selector(secondButtonActionPressed)).build()
+                                               selector: #selector(returnButtonPressed)).build()
             } else {
                 self.buttonReturn = WhiteButton(context: self,
                                                 title: titleReturnButton!,
-                                                selector: #selector(secondButtonActionPressed)).build()
+                                                selector: #selector(returnButtonPressed)).build()
             }
         }
     }
     
-    @objc func firstButtonActionPressed(sender: UIButton!) {
-        animateDismissView()
-        actionButton!()
-    }
-    
-    @objc func secondButtonActionPressed(sender: UIButton!) {
-        animateDismissView()
-        actionReturnButton!()
-    }
-    
-    func setupConstraints() {
+    func addComponentsView() {
         view.addSubview(dimmedView)
-        view.addSubview(containerView)
         
         containerView.addSubview(pickBar)
         
@@ -200,8 +202,12 @@ open class BottomSheetViewController: UIViewController {
         
         containerView.addSubview(contentVerticalButtonsStackView)
         
-        self.setStyle()
+        view.addSubview(containerView)
         
+        self.setStyle()
+    }
+    
+    func setupConstraints() {
         dimmedView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -315,6 +321,17 @@ open class BottomSheetViewController: UIViewController {
                     self.animateDismissView()
                 }
             }
+        }
+    }
+    
+    func showInfoHeader(layoutHeader: UIViewController) {
+        containerView.addSubview(layoutHeader.view)
+        
+        layoutHeader.view.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottomMargin.equalTo(containerView)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
     }
     

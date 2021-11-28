@@ -38,4 +38,7 @@ extension UIViewController {
         self.addChild(viewController)
         viewController.didMove(toParent: self)
     }
+    
+    func triggerAction() {
+    }
 }

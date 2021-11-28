@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class BottomSheetLayoutDialog: BottomSheetViewController {
+open class BottomSheetLayoutDialog: BottomSheetViewController {
     private var layout: UIViewController!
     
     init?(
@@ -39,7 +39,7 @@ class BottomSheetLayoutDialog: BottomSheetViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         addConstraintsHeader = { make in
             if self.icon != nil {
                 make.topMargin.equalTo(self.image!).offset(40)

@@ -17,6 +17,7 @@
 		BA7D7A3F272EC406001666F4 /* BottomSheetDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7D7A3E272EC406001666F4 /* BottomSheetDialog.swift */; };
 		BA7D7A41272ECF93001666F4 /* BottomSheetLayoutDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7D7A40272ECF93001666F4 /* BottomSheetLayoutDialog.swift */; };
 		BA8389A327167A320033BA25 /* LayoutBeautyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8389A227167A320033BA25 /* LayoutBeautyView.swift */; };
+		BAEFEA132753B21000E1CD57 /* BottomSheetComboDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEFEA122753B20F00E1CD57 /* BottomSheetComboDialog.swift */; };
 		BAF95828270BB7A3008602A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF95827270BB7A3008602A0 /* AppDelegate.swift */; };
 		BAF9582A270BB7A3008602A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF95829270BB7A3008602A0 /* SceneDelegate.swift */; };
 		BAF9582C270BB7A3008602A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF9582B270BB7A3008602A0 /* ViewController.swift */; };
@@ -40,6 +41,7 @@
 		BA7D7A3E272EC406001666F4 /* BottomSheetDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetDialog.swift; sourceTree = "<group>"; };
 		BA7D7A40272ECF93001666F4 /* BottomSheetLayoutDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetLayoutDialog.swift; sourceTree = "<group>"; };
 		BA8389A227167A320033BA25 /* LayoutBeautyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutBeautyView.swift; sourceTree = "<group>"; };
+		BAEFEA122753B20F00E1CD57 /* BottomSheetComboDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetComboDialog.swift; sourceTree = "<group>"; };
 		BAF95824270BB7A3008602A0 /* bottom-sheet-dialog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bottom-sheet-dialog.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAF95827270BB7A3008602A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAF95829270BB7A3008602A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				BA7D7A3E272EC406001666F4 /* BottomSheetDialog.swift */,
 				BA7D7A40272ECF93001666F4 /* BottomSheetLayoutDialog.swift */,
 				BA6A07D2273956E60088A6CD /* BottomSheetConfirmationDialog.swift */,
+				BAEFEA122753B20F00E1CD57 /* BottomSheetComboDialog.swift */,
 			);
 			name = dialog;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				BAF95840270BBA0D008602A0 /* Extensions.swift in Sources */,
 				BA737192270FCA5300C8CED6 /* BlueButton.swift in Sources */,
 				BA737194270FCB0300C8CED6 /* WhiteButton.swift in Sources */,
+				BAEFEA132753B21000E1CD57 /* BottomSheetComboDialog.swift in Sources */,
 				BA6A07D3273956E60088A6CD /* BottomSheetConfirmationDialog.swift in Sources */,
 				BA6C8E4D270BE09B0051471C /* Button.swift in Sources */,
 				BA7D7A3F272EC406001666F4 /* BottomSheetDialog.swift in Sources */,
